@@ -100,13 +100,6 @@ window.addEventListener('hashchange',()=>{const [id,s]=location.hash.slice(1).sp
 const [hashId,hashStep]=location.hash.slice(1).split('/');
 const initialId=hashId||saved.page||slides[0].id;const initial=slides.findIndex(x=>x.id===initialId);
 const initialSteps={...saved.steps};
-go(initial<0?0:initial,hashId?Number(hashStep)||0:initialSteps[initialId]||0,initialId==='connectivity');
-if (initialId === 'connectivity') {
-  // Refresh the initial Shadow DOM layer after the page entrance has settled.
-  const initialSlide = slides[page];
-  Promise.resolve(flip?.finished).then(() => setTimeout(() => {
-    if (slides[page] === initialSlide) initialSlide.animate([{opacity:.999},{opacity:1}],{duration:1});
-  }, 250)).catch(() => {});
-}
+go(initial<0?0:initial,hashId?Number(hashStep)||0:initialSteps[initialId]||0,false);
 // Read-only inspection for validation; controls use the same public UI handlers.
 window.summit={getState:()=>({page:slides[page].id,...state(),paused}),version:'draft-02'};
