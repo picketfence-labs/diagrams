@@ -82,7 +82,7 @@
 <section class="slide standard" id="guardrails" data-title="LLMの切替・フェイルオーバー・ガードレール" data-component="gateway">
 <div id="gateway-host" role="img" aria-label="AIエージェントからAI Gatewayを通り、モデル切替、フェイルオーバー、PIIマスキング、危険な要求のブロックを示す"></div>
 <template id="gateway-template"><style>
-/* P5: the same card language as P3, with the Gateway on the actual request path. */
+/* P5: P3 card language; geometry animates without a scaled text layer. */
 :host{display:block;position:absolute;inset:0;background:#000}
 :host .g-canvas{position:absolute;left:100px;top:55px;width:1400px;height:760px;font-family:'Funnel Sans','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;color:#fff}
 :host .g-canvas *{box-sizing:border-box}
@@ -96,53 +96,53 @@
 :host .g-route.g-hot{stroke:#ccff00;stroke-width:4;stroke-dasharray:none}
 :host .g-route.g-failed{stroke:#ff936d;stroke-width:4;stroke-dasharray:none}
 :host .g-node{position:absolute;background:#1a1f1b;border:2px solid #4a4d49;border-radius:8px;padding:18px 23px}
-:host .g-node strong{display:block;font-size:24px;font-weight:700;line-height:1.25}
+:host .g-node strong{display:block;font-size:24px;font-weight:700;line-height:1.2}
 :host .g-node>span{display:block;color:#cdd4cb;font-size:16px;margin-top:5px}
 :host .g-node.g-active{border-color:#ccff00;box-shadow:0 0 0 1px #ccff0033}
 :host .g-node.g-error{border-color:#ff936d}
-:host .g-node.g-error span{color:#ffb497}
+:host .g-node.g-error>span{color:#ffb497}
 :host .g-node.g-muted{opacity:.38}
-:host #g-agent{left:700px;top:345px;width:300px;height:150px;padding:25px 26px}
-:host #g-agent .g-agent-sub{margin-top:12px}
-:host #g-agent .g-agent-data{margin-top:13px;padding:6px 9px;border:1px solid #586456;border-radius:4px;font-size:15px;white-space:nowrap}
-:host #g-gateway{left:425px;top:325px;width:225px;height:190px;padding:21px 20px}
-:host #g-gateway strong{font-size:24px}
+:host #g-agent{padding:21px 23px}
+:host #g-agent .g-agent-sub{margin-top:8px}
+:host #g-agent .g-agent-data{margin-top:10px;padding:7px 9px;border:1px solid #586456;border-radius:4px;font-size:15px;line-height:1.25;white-space:pre-line}
+:host #g-gateway{padding:21px 20px}
 :host #g-gateway .g-gateway-state{margin-top:13px;padding:7px 8px;border:1px solid #6d865c;border-radius:4px;color:#ccff00;font-size:16px;font-weight:700;white-space:nowrap}
-:host .g-model{left:70px;width:260px;height:70px;padding:17px 23px;display:flex;align-items:center;justify-content:space-between}
-:host .g-model strong{font-size:22px}
-:host .g-model span{font-size:14px;font-weight:700;margin:0;white-space:nowrap}
-:host #g-model-0{top:245px}:host #g-model-1{top:335px}:host #g-model-2{top:425px}:host #g-model-3{top:515px}
-:host .g-service{left:1030px;width:300px;height:100px;padding:18px 21px}
+:host .g-model{padding:12px 23px;display:flex;align-items:center;justify-content:space-between;gap:9px}
+:host .g-model strong{font-size:22px;max-width:80%;overflow-wrap:anywhere}
+:host .g-model>span{font-size:14px;font-weight:700;margin:0;white-space:nowrap}
+:host #g-model-1.g-receiving{display:block;padding:16px 21px}
+:host #g-model-1.g-receiving strong{max-width:none}
+:host #g-model-1.g-receiving>span{position:absolute;right:20px;top:18px}
+:host #g-received{position:absolute;left:20px;right:20px;top:55px;padding:6px 8px;border:1px solid #6d865c;border-radius:4px;background:#07180d;color:#ccff00;font-size:14px;line-height:1.25;white-space:pre-line}
+:host .g-service{left:1105px;width:275px;height:100px;padding:18px 21px}
 :host .g-service strong{font-size:21px}
 :host .g-service span{font-size:15px}
 :host #g-sanitizer{top:180px}:host #g-guard{top:530px}
 :host .g-hidden{opacity:0;pointer-events:none}
 :host .g-hidden.g-visible{opacity:1;pointer-events:auto}
-:host .g-notice{position:absolute;left:1030px;top:315px;width:300px;min-height:63px;border:2px solid #ccff00;border-radius:7px;background:#07180d;padding:11px 18px;font-size:19px;font-weight:700;line-height:1.2}
+:host .g-notice{position:absolute;left:1105px;top:385px;width:275px;min-height:63px;border:2px solid #ccff00;border-radius:7px;background:#07180d;padding:11px 18px;font-size:19px;font-weight:700;line-height:1.2}
 :host .g-notice span{display:block;font-size:14px;font-weight:500;color:#cdd4cb;margin-top:4px}
-:host #g-block{top:385px;color:#ccff00}
 :host #g-packet circle{fill:#ccff00}:host #g-packet.g-alert circle{fill:#ff936d}
-:host .g-caption{position:absolute;left:36px;top:665px;color:#ccff00;font-size:23px;font-weight:700}</style>
+:host #g-packet text{fill:#ccff00;paint-order:stroke;stroke:#000;stroke-width:3;font-size:15px;font-weight:800;text-anchor:middle}
+:host .g-caption{position:absolute;left:36px;top:665px;color:#ccff00;font-size:23px;font-weight:700}
+:host .g-caption.g-emphasis{top:648px;font-size:32px}</style>
 <div class="g-canvas">
 <div id="g-title" class="g-title"></div><div id="g-sentence" class="g-sentence"></div><div class="g-guide g-guide-top"></div><div class="g-guide g-guide-bottom"></div>
-<svg class="g-route-layer" viewBox="0 0 1400 760" aria-hidden="true">
-<g><path id="g-route-agent" class="g-route" d="M700 420H650"/>
-<path id="g-route-0" class="g-route" d="M425 420H380V280H330"/>
-<path id="g-route-1" class="g-route" d="M425 420H380V370H330"/>
-<path id="g-route-2" class="g-route" d="M425 420H380V460H330"/>
-<path id="g-route-3" class="g-route" d="M425 420H380V550H330"/>
-<path id="g-route-sanitizer" class="g-route g-hidden" d="M537 325V230H1030"/>
-<path id="g-route-guard" class="g-route g-hidden" d="M537 515V580H1030"/></g>
-<g id="g-packet" class="g-hidden"><circle r="10"/></g></svg>
+<svg class="g-route-layer" viewBox="0 0 1400 760" aria-hidden="true"><g>
+<path id="g-route-agent" class="g-route" d="M800 410H730"/>
+<path id="g-route-0" class="g-route" d="M500 410H440V286H330"/>
+<path id="g-route-1" class="g-route" d="M500 410H440V381H330"/>
+<path id="g-route-2" class="g-route g-hidden" d="M500 410H440V476H330"/>
+<path id="g-route-sanitizer" class="g-route g-hidden" d="M615 315V230H1105"/>
+<path id="g-route-guard" class="g-route g-hidden" d="M615 505V580H1105"/>
+</g><g id="g-packet" class="g-hidden"><circle r="10"/><text id="g-packet-label" y="-15"></text></g></svg>
 <div id="g-agent" class="g-node"><strong>AIエージェント</strong><span class="g-agent-sub">判断し、次の処理を進める</span><div id="g-agent-data" class="g-agent-data"></div></div>
 <div id="g-gateway" class="g-node"><strong>Kong AI Gateway</strong><span>同じ接続の入口</span><div id="g-gateway-state" class="g-gateway-state"></div></div>
-<div id="g-model-0" class="g-node g-model"><strong>Claude</strong><span>LLM</span></div>
-<div id="g-model-1" class="g-node g-model"><strong>OpenAI</strong><span>LLM</span></div>
-<div id="g-model-2" class="g-node g-model"><strong>Gemini</strong><span>LLM</span></div>
-<div id="g-model-3" class="g-node g-model"><strong>ローカルモデル</strong><span>LLM</span></div>
-<div id="g-sanitizer" class="g-node g-service g-hidden"><strong>AI PII Sanitizer</strong><span>外部PIIサービスでマスク</span></div>
+<div id="g-model-0" class="g-node g-model"><strong>Claude Opus</strong><span>LLM</span></div>
+<div id="g-model-1" class="g-node g-model"><strong>OpenAI Sol</strong><span>LLM</span><div id="g-received" class="g-hidden"></div></div>
+<div id="g-model-2" class="g-node g-model g-hidden"><strong>Gemini Flash</strong><span>LLM</span></div>
+<div id="g-sanitizer" class="g-node g-service g-hidden"><strong>AI PII Sanitizer</strong><span>外部PIIサービスで伏せ字に</span></div>
 <div id="g-guard" class="g-node g-service g-hidden"><strong>外部Guardrail</strong><span>Azure Content Safety または Lakera Guard</span></div>
-<div id="g-sanitized" class="g-notice g-hidden">マスク済み<span>カード番号 •••• / 電話 *** / メール ***</span></div>
 <div id="g-block" class="g-notice g-hidden">BLOCK<span>LLMへ転送しない</span></div>
 <div id="g-caption" class="g-caption"></div>
 </div></template>
