@@ -32,8 +32,8 @@
 :host #c-claude{top:260px}:host #c-gemini{top:440px}:host #c-local{top:530px}
 :host .c-model:not(#c-openai){left:75px;width:280px;height:72px;padding:18px 26px;display:flex;align-items:center;justify-content:space-between}
 :host .c-model:not(#c-openai)>span{font-size:15px;font-weight:700;letter-spacing:1px;margin:0}
-:host #c-api{left:1160px;top:360px;width:200px;height:100px;padding:17px 18px}
-:host #c-mcp{left:910px;top:360px;width:200px;height:100px;padding:17px 18px}
+:host #c-api{left:1135px;top:360px;width:180px;height:100px;padding:17px 18px}
+:host #c-mcp{left:885px;top:360px;width:200px;height:100px;padding:17px 18px}
 :host #c-api>span,:host #c-mcp>span{margin-top:4px}
 :host #c-peer{left:545px;top:530px;width:300px;height:80px;padding:13px 26px}
 :host #c-peer>span{margin-top:2px}
