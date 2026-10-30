@@ -64,10 +64,6 @@ export function mountSequence(slide, specification, onChange = () => {}) {
 }
 
 export const sequences = {
-  ecosystem: {
-    states:['Agent ↔ LLM','複数モデルへ','APIとMCP','Agent同士','面として捉える'],
-    captions:['指示とルールをLLMに送り、処理結果をAgentへ返す。','OpenAI、Claude、Gemini、ローカルモデルへ接続先が広がる。','API・MCPとの接続が、業務のコンテキストを運ぶ。','他のAgentとの通信も加わる。','AI Gatewayの議論をLLM通信だけに閉じず、アクセス制御・観測・コスト管理を全体で考える。']
-  },
   gateway: {
     states:['複数モデルへの接続','モデルを切り替える','障害時のフェイルオーバー','PIIをマスキング','危険な入力をブロック'],
     captions:['Agentから複数のLLMへ接続する。','Agentの呼び方を保ち、選択先をOpenAI SolからClaude Opusへ変える。','Azure OpenAIに接続できないとき、バックアップのOpenAIへ切り替える。','AI PII Sanitizerがカード番号・電話番号・メールアドレスをマスキングしてGatewayへ返す。','Azure Content SafetyやLakera Guardがジェイルブレイクを検知し、LLMへの転送を止める。']

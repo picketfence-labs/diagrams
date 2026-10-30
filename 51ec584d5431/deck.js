@@ -1,5 +1,6 @@
 import {mountP1} from './components/p1.js';
 import {mountSequence, sequences} from './components/sequence.js';
+import {mountConnectivity} from './components/connectivity.js';
 
 const $ = s => document.querySelector(s);
 const slides = [...document.querySelectorAll('.slide')];
@@ -23,6 +24,7 @@ for (const [i, slide] of slides.entries()) {
     for (const side of ['left','right']) { const img=new Image();img.src='./images/divider-pattern.png';img.alt='';img.className='pattern '+side;slide.prepend(img); }
   }
   if (slide.dataset.component === 'p1') components.set(i,mountP1($('#p1-host'),()=>queueMicrotask(update)));
+  else if (slide.dataset.component === 'connectivity') components.set(i,mountConnectivity(slide,()=>queueMicrotask(update)));
   else if (sequences[slide.dataset.component]) {
     const svg = slide.querySelector('svg');
     if(slide.dataset.component!=='ecosystem'){
