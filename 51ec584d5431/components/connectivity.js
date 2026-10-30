@@ -7,7 +7,7 @@ export function mountConnectivity(slide, onChange = () => {}) {
     ['AIエージェント', 'まず、業務を進めるAgentを起点に見ていきます。'],
     ['LLMとの通信', '指示とルールを送り、LLMの処理結果を受け取ります。'],
     ['接続先が1つから4つへ', 'OpenAIに加え、Claude・Gemini・ローカルモデルへ広がります。'],
-    ['LLMの外側にも接続がある', 'APIとMCPが、業務のデータと操作をAgentへつなぎます。'],
+    ['LLMの外側にも接続がある', 'AgentからMCPへ、MCPからAPIへ接続が広がります。'],
     ['Agent同士もつながる', '通信相手に、別のAIエージェントが加わります。'],
     ['接続を、面で捉える', '増えた経路に、アクセス制御・観測・コスト管理が要ります。']
   ];
@@ -17,8 +17,8 @@ export function mountConnectivity(slide, onChange = () => {}) {
   const packet = $('c-packet');
   const stages = {
     1: ['c-openai', 'c-route-openai'],
-    2: ['c-claude', 'c-route-claude', 'c-gemini', 'c-route-gemini', 'c-local', 'c-route-local', 'c-relation'],
-    3: ['c-api', 'c-route-api', 'c-mcp', 'c-route-mcp'],
+    2: ['c-claude', 'c-route-claude', 'c-gemini', 'c-route-gemini', 'c-local', 'c-route-local'],
+    3: ['c-mcp', 'c-route-mcp', 'c-api', 'c-route-api'],
     4: ['c-peer', 'c-route-peer'],
     5: ['c-plane', 'c-control', 'c-observe', 'c-cost']
   };
@@ -28,6 +28,13 @@ export function mountConnectivity(slide, onChange = () => {}) {
   const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   const snapshot = () => ({step, busy, count: scenes.length, title: scenes[step][0]});
   const show = (id, visible = true) => $(id).classList.toggle('c-visible', visible);
+  const models = [['c-openai','c-route-openai'],['c-claude','c-route-claude'],['c-gemini','c-route-gemini'],['c-local','c-route-local']];
+  function activeModel(id) {
+    for (const [node, route] of models) {
+      $(node).classList.toggle('c-active', node === id);
+      $(route).classList.toggle('c-current', node === id);
+    }
+  }
   function shapeOpenAI(t) {
     const node = $('c-openai');
     node.style.top = `${260 + 90 * t}px`;
@@ -53,6 +60,7 @@ export function mountConnectivity(slide, onChange = () => {}) {
     for (const id of allReveals) show(id, false);
     for (let n = 1; n <= step; n++) for (const id of stages[n]) show(id);
     shapeOpenAI(step >= 2 ? 1 : 0);
+    activeModel(step === 1 ? 'c-openai' : step === 2 ? 'c-local' : null);
     if (step !== 1) show('c-flow-note', false);
     else { show('c-flow-note'); host.classList.add('is-result'); }
     title.textContent = scenes[step][0];
@@ -102,10 +110,11 @@ export function mountConnectivity(slide, onChange = () => {}) {
     return ok;
   }
   async function pause(ms, token) { return animate(ms, token, () => {}); }
-  async function arrive(id, route, token, reverse = false) {
+  async function arrive(id, route, token, {drawRoute = true, model = false} = {}) {
     show(id);
-    if (!await draw(route, token)) return false;
-    if (!await travel(route, token, reverse)) return false;
+    if (drawRoute && !await draw(route, token)) return false;
+    if (!await travel(route, token)) return false;
+    if (model) activeModel(id);
     $(id).classList.add('is-pulsing');
     if (!await pause(170, token)) return false;
     $(id).classList.remove('is-pulsing');
@@ -146,6 +155,7 @@ export function mountConnectivity(slide, onChange = () => {}) {
       }
       if (ok) {
         host.classList.remove('is-request');
+        activeModel('c-openai');
         $('c-openai').classList.add('is-pulsing');
         ok = await pause(180, token);
         $('c-openai').classList.remove('is-pulsing');
@@ -157,14 +167,15 @@ export function mountConnectivity(slide, onChange = () => {}) {
     } else if (step === 2) {
       show('c-flow-note', false);
       host.classList.remove('is-result');
+      activeModel(null);
       ok = await animate(700, token, shapeOpenAI);
-      for (const [node, route] of [['c-claude','c-route-claude'],['c-gemini','c-route-gemini'],['c-local','c-route-local']]) {
+      for (const [node, route, drawRoute] of [['c-openai','c-route-openai',false],['c-claude','c-route-claude',true],['c-gemini','c-route-gemini',true],['c-local','c-route-local',true]]) {
         if (!ok) break;
-        ok = await arrive(node, route, token);
+        ok = await arrive(node, route, token, {drawRoute, model:true});
       }
-      if (ok) show('c-relation');
     } else if (step === 3) {
-      for (const [node, route] of [['c-api','c-route-api'],['c-mcp','c-route-mcp']]) {
+      activeModel(null);
+      for (const [node, route] of [['c-mcp','c-route-mcp'],['c-api','c-route-api']]) {
         if (!ok) break;
         ok = await arrive(node, route, token);
       }

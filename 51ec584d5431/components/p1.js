@@ -87,7 +87,7 @@ export function mountP1(host, onChange = () => {}) {
       <g data-el="impact">${['トークンコスト','処理時間','機微情報の露出','集計・加工の処理負担'].map((v,n)=>`<g data-impact="${n}" transform="translate(${36+n*337} 663)"><path d="M0 0H310" class="impact-rule"/><text y="36" class="impact-label">${v}</text></g>`).join('')}</g>
       <g class="packet" visibility="hidden"><circle r="8"/><g class="data-packet"><rect x="-25" y="-19" width="44" height="27" rx="3"/><rect x="-22" y="-15" width="44" height="27" rx="3"/><rect x="-19" y="-11" width="44" height="27" rx="3"/><text x="3" y="7" text-anchor="middle">DATA</text></g></g>
       <g class="packet-status packet" visibility="hidden" transform="translate(36 660)"><rect width="620" height="42" rx="4"/><text x="18" y="27"></text></g>
-      <text x="1366" y="742" text-anchor="end" class="footnote">概念図・架空のAPI / 数値は未計測</text>`;
+      `;
     // Retain the Tool chips from Sprawl above the expanding context background.
     svg.querySelector('[data-el="bloat"]').after(svg.querySelector('[data-el="tool-cloud"]'));
     return svg;
