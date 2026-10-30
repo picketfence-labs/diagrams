@@ -20,6 +20,17 @@
 
 #context-code[data-step="5"] .code-bulk{opacity:.12}
 #context-code .code-bulk{transition:opacity .7s ease}
+
+.cost-summary h2{font-size:54px;max-width:1448px}
+.cost-summary .cost-lead{font-size:25px;line-height:1.5;color:var(--muted);margin-top:20px}
+.cost-pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:49px}
+.cost-pillar{min-height:286px;padding:27px 30px;background:#111713;border:1px solid #465347;border-top:3px solid var(--lime);border-radius:7px}
+.cost-pillar .cost-kicker{font-size:18px;letter-spacing:2px;color:var(--lime);font-weight:700}
+.cost-pillar h3{font-size:36px;line-height:1.28;margin-top:18px}
+.cost-pillar>p:last-child{font-size:24px;line-height:1.48;color:var(--muted);margin-top:16px}
+.cost-examples{display:grid;grid-template-columns:250px 1fr 1.32fr;gap:30px;margin-top:34px;padding-top:24px;border-top:1px solid #4d5e4e;align-items:start}
+.cost-examples p{font-size:22px;line-height:1.45;color:var(--muted)}
+.cost-examples .cost-examples-title{color:var(--lime);font-weight:700}
 #context-code[data-step="5"] .code-bulk{opacity:0}
 @keyframes connection-arrive{from{opacity:0;transform:translateY(24px) scale(.76)}60%{opacity:1;transform:translateY(-8px) scale(1.04)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes route-pulse{from{stroke-dasharray:15 18;stroke-dashoffset:65}to{stroke-dasharray:15 18;stroke-dashoffset:0}}
