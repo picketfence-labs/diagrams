@@ -64,10 +64,6 @@ export function mountSequence(slide, specification, onChange = () => {}) {
 }
 
 export const sequences = {
-  gateway: {
-    states:['複数モデルへの接続','モデルを切り替える','障害時のフェイルオーバー','PIIをマスキング','危険な入力をブロック'],
-    captions:['Agentから複数のLLMへ接続する。','Agentの呼び方を保ち、選択先をOpenAI SolからClaude Opusへ変える。','Azure OpenAIに接続できないとき、バックアップのOpenAIへ切り替える。','AI PII Sanitizerがカード番号・電話番号・メールアドレスをマスキングしてGatewayへ返す。','Azure Content SafetyやLakera Guardがジェイルブレイクを検知し、LLMへの転送を止める。']
-  },
   code: {
     states:['全体像','必要なツールを探す','処理をコードにする','複数APIを呼び出す','結果を集約・加工する','必要な結果を返す'],
     captions:['申込・契約・商品から、成立率の上位5商品を出す。','ツールを探し、引数と返却形式をget_schemaで確認する。','LLMが、データ取得と成立率の計算をコードにする。','申込300件・契約200件・商品5件を、各APIから取得する。','商品IDごとに件数を集計し、成立率で並べ替える。','上位5商品の集計結果を返し、Agent / LLMが回答にする。'],

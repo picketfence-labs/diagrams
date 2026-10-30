@@ -79,15 +79,74 @@
 </template>
 </section>
 <section class="slide divider" id="llm" data-title="01 · LLM Connectivity"><p class="eyebrow">01</p><h2 class="gradient">LLM Connectivity</h2><p class="subline">安全に使い、コストを理解する。</p></section>
-<section class="slide standard motion-slide" id="guardrails" data-title="LLMの切替・フェイルオーバー・ガードレール" data-component="gateway">
-<p class="eyebrow">LLM CONNECTIVITY</p><h2>モデルを選び、通信を守る。</h2><svg class="diagram" viewBox="0 0 1448 500" aria-label="AI Gatewayによるモデル切替、フェイルオーバー、PIIマスキングとガードレール">
-<path class="flow" d="M270 208H525"/><rect class="box" x="12" y="140" width="258" height="135" rx="8"/><text class="label" x="141" y="217" text-anchor="middle">AIエージェント</text><rect class="box bright" x="525" y="140" width="340" height="135" rx="8"/><text class="label" x="695" y="200" text-anchor="middle">Kong AI Gateway</text><text class="detail" x="695" y="247" text-anchor="middle">ルーティング・ポリシー</text>
-<g class="gateway-models"><path class="route" d="M865 208H1035V75M1035 208V335"/><rect class="box" x="1060" y="30" width="350" height="90" rx="8"/><text class="detail" x="1235" y="86" text-anchor="middle">OpenAI Sol</text><rect class="box" x="1060" y="140" width="350" height="90" rx="8"/><text class="detail" x="1235" y="196" text-anchor="middle">Claude Opus / Gemini</text><rect class="box" x="1060" y="250" width="350" height="90" rx="8"/><text class="detail" x="1235" y="306" text-anchor="middle">Azure OpenAI / Local</text></g>
-<g class="gateway-switch"><path class="flow" d="M865 190H1060"/><text class="label" x="990" y="405" text-anchor="middle">OpenAI Sol → Claude Opus</text><text class="tiny" x="990" y="447" text-anchor="middle">Agentの接続方式は維持</text></g>
-<g class="gateway-failover"><path class="flow" d="M865 225H1060"/><text class="label" x="990" y="405" text-anchor="middle">Azure OpenAI → バックアップ OpenAI</text><text class="tiny" x="990" y="447" text-anchor="middle">接続障害時の切替例</text></g>
-<g class="gateway-sanitizer"><path class="flow" d="M670 140V85H415"/><rect class="box" x="38" y="20" width="377" height="107" rx="8"/><text class="label" x="226" y="62" text-anchor="middle">AI PII Sanitizer</text><text class="tiny" x="226" y="102" text-anchor="middle">カード番号・電話・メールをマスク</text></g>
-<g class="gateway-guard"><path class="flow" d="M695 275V365H375"/><rect class="box" x="38" y="355" width="350" height="115" rx="8"/><text class="label" x="213" y="397" text-anchor="middle">Guardrail service</text><text class="tiny" x="213" y="435" text-anchor="middle">Azure Content Safety / Lakera Guard</text><text class="detail" x="610" y="438">検知 → LLMへ送らずブロック</text></g></svg><p class="scene-caption"></p>
-<p class="source"><a href="https://developer.konghq.com/ai-gateway/policies/ai-sanitizer/#fields-that-can-be-anonymized" target="_blank" rel="noopener">Source: Kong AI PII Sanitizer</a> · <a href="https://developer.konghq.com/ai-gateway/" target="_blank" rel="noopener">AI Gateway</a></p>
+<section class="slide standard" id="guardrails" data-title="LLMの切替・フェイルオーバー・ガードレール" data-component="gateway">
+<div id="gateway-host" role="img" aria-label="AIエージェントからAI Gatewayを通り、モデル切替、フェイルオーバー、PIIマスキング、危険な要求のブロックを示す"></div>
+<template id="gateway-template"><style>
+/* P5: the same card language as P3, with the Gateway on the actual request path. */
+:host{display:block;position:absolute;inset:0;background:#000}
+:host .g-canvas{position:absolute;left:100px;top:55px;width:1400px;height:760px;font-family:'Funnel Sans','Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;color:#fff}
+:host .g-canvas *{box-sizing:border-box}
+:host .g-title{position:absolute;left:36px;top:20px;font-size:38px;font-weight:700;line-height:1.2}
+:host .g-sentence{position:absolute;left:36px;top:91px;font-size:22px;color:#cdd4cb;line-height:1.3}
+:host .g-guide{position:absolute;height:1px;background:#4a4d49;opacity:.45}
+:host .g-guide-top{left:36px;top:140px;width:1330px}
+:host .g-guide-bottom{left:36px;top:641px;width:670px}
+:host .g-route-layer{position:absolute;inset:0;width:1400px;height:760px;overflow:visible;pointer-events:none}
+:host .g-route{fill:none;stroke:#768274;stroke-width:2;stroke-dasharray:7 7;stroke-linecap:butt}
+:host .g-route.g-hot{stroke:#ccff00;stroke-width:4;stroke-dasharray:none}
+:host .g-route.g-failed{stroke:#ff936d;stroke-width:4;stroke-dasharray:none}
+:host .g-node{position:absolute;background:#1a1f1b;border:2px solid #4a4d49;border-radius:8px;padding:18px 23px}
+:host .g-node strong{display:block;font-size:24px;font-weight:700;line-height:1.25}
+:host .g-node>span{display:block;color:#cdd4cb;font-size:16px;margin-top:5px}
+:host .g-node.g-active{border-color:#ccff00;box-shadow:0 0 0 1px #ccff0033}
+:host .g-node.g-error{border-color:#ff936d}
+:host .g-node.g-error span{color:#ffb497}
+:host .g-node.g-muted{opacity:.38}
+:host #g-agent{left:700px;top:345px;width:300px;height:150px;padding:25px 26px}
+:host #g-agent .g-agent-sub{margin-top:12px}
+:host #g-agent .g-agent-data{margin-top:13px;padding:6px 9px;border:1px solid #586456;border-radius:4px;font-size:15px;white-space:nowrap}
+:host #g-gateway{left:425px;top:325px;width:225px;height:190px;padding:21px 20px}
+:host #g-gateway strong{font-size:24px}
+:host #g-gateway .g-gateway-state{margin-top:13px;padding:7px 8px;border:1px solid #6d865c;border-radius:4px;color:#ccff00;font-size:16px;font-weight:700;white-space:nowrap}
+:host .g-model{left:70px;width:260px;height:70px;padding:17px 23px;display:flex;align-items:center;justify-content:space-between}
+:host .g-model strong{font-size:22px}
+:host .g-model span{font-size:14px;font-weight:700;margin:0;white-space:nowrap}
+:host #g-model-0{top:245px}:host #g-model-1{top:335px}:host #g-model-2{top:425px}:host #g-model-3{top:515px}
+:host .g-service{left:1030px;width:300px;height:100px;padding:18px 21px}
+:host .g-service strong{font-size:21px}
+:host .g-service span{font-size:15px}
+:host #g-sanitizer{top:180px}:host #g-guard{top:530px}
+:host .g-hidden{opacity:0;pointer-events:none}
+:host .g-hidden.g-visible{opacity:1;pointer-events:auto}
+:host .g-notice{position:absolute;left:1030px;top:315px;width:300px;min-height:63px;border:2px solid #ccff00;border-radius:7px;background:#07180d;padding:11px 18px;font-size:19px;font-weight:700;line-height:1.2}
+:host .g-notice span{display:block;font-size:14px;font-weight:500;color:#cdd4cb;margin-top:4px}
+:host #g-block{top:385px;color:#ccff00}
+:host #g-packet circle{fill:#ccff00}:host #g-packet.g-alert circle{fill:#ff936d}
+:host .g-caption{position:absolute;left:36px;top:665px;color:#ccff00;font-size:23px;font-weight:700}</style>
+<div class="g-canvas">
+<div id="g-title" class="g-title"></div><div id="g-sentence" class="g-sentence"></div><div class="g-guide g-guide-top"></div><div class="g-guide g-guide-bottom"></div>
+<svg class="g-route-layer" viewBox="0 0 1400 760" aria-hidden="true">
+<g><path id="g-route-agent" class="g-route" d="M700 420H650"/>
+<path id="g-route-0" class="g-route" d="M425 420H380V280H330"/>
+<path id="g-route-1" class="g-route" d="M425 420H380V370H330"/>
+<path id="g-route-2" class="g-route" d="M425 420H380V460H330"/>
+<path id="g-route-3" class="g-route" d="M425 420H380V550H330"/>
+<path id="g-route-sanitizer" class="g-route g-hidden" d="M537 325V230H1030"/>
+<path id="g-route-guard" class="g-route g-hidden" d="M537 515V580H1030"/></g>
+<g id="g-packet" class="g-hidden"><circle r="10"/></g></svg>
+<div id="g-agent" class="g-node"><strong>AIエージェント</strong><span class="g-agent-sub">判断し、次の処理を進める</span><div id="g-agent-data" class="g-agent-data"></div></div>
+<div id="g-gateway" class="g-node"><strong>Kong AI Gateway</strong><span>同じ接続の入口</span><div id="g-gateway-state" class="g-gateway-state"></div></div>
+<div id="g-model-0" class="g-node g-model"><strong>Claude</strong><span>LLM</span></div>
+<div id="g-model-1" class="g-node g-model"><strong>OpenAI</strong><span>LLM</span></div>
+<div id="g-model-2" class="g-node g-model"><strong>Gemini</strong><span>LLM</span></div>
+<div id="g-model-3" class="g-node g-model"><strong>ローカルモデル</strong><span>LLM</span></div>
+<div id="g-sanitizer" class="g-node g-service g-hidden"><strong>AI PII Sanitizer</strong><span>外部PIIサービスでマスク</span></div>
+<div id="g-guard" class="g-node g-service g-hidden"><strong>外部Guardrail</strong><span>Azure Content Safety または Lakera Guard</span></div>
+<div id="g-sanitized" class="g-notice g-hidden">マスク済み<span>カード番号 •••• / 電話 *** / メール ***</span></div>
+<div id="g-block" class="g-notice g-hidden">BLOCK<span>LLMへ転送しない</span></div>
+<div id="g-caption" class="g-caption"></div>
+</div></template>
+<p class="source"><a href="https://developer.konghq.com/ai-gateway/entities/ai-model/" target="_blank" rel="noopener">AI Models</a> · <a href="https://developer.konghq.com/ai-gateway/policies/ai-sanitizer/" target="_blank" rel="noopener">AI PII Sanitizer</a> · <a href="https://developer.konghq.com/ai-gateway/ai-data-gov/" target="_blank" rel="noopener">AI guardrails</a></p>
 </section>
 <section class="slide standard" id="cost-demo" data-title="DEMO 1 · AI Cost Management" data-demo="AI Cost Management">
 <p class="eyebrow">AI COST MANAGEMENT</p><h2>費用の総額から、使い道の理解へ。</h2><div class="columns"><article><p class="number">01 / OBSERVE</p><h3>誰が使ったか</h3><p>チーム・アプリケーション・<br>エージェントに結びつける。</p></article><article><p class="number">02 / PLAN</p><h3>予算内か</h3><p>利用の実績を、<br>業務の予算と照らし合わせる。</p></article><article><p class="number">03 / ACT</p><h3>次に何を変えるか</h3><p>増加の理由を理解し、<br>運用の判断につなげる。</p></article></div><div class="demo-callout"><span>DEMO 01</span>Konnect Cost Managementの画面へ</div><p class="source"><a href="https://konghq.com/products/ai-cost-management" target="_blank" rel="noopener">Source: Kong AI Cost Management</a></p>
