@@ -100,6 +100,7 @@ window.addEventListener('hashchange',()=>{const [id,s]=location.hash.slice(1).sp
 const [hashId,hashStep]=location.hash.slice(1).split('/');
 const initialId=hashId||saved.page||slides[0].id;const initial=slides.findIndex(x=>x.id===initialId);
 const initialSteps={...saved.steps};
-go(initial<0?0:initial,hashId?Number(hashStep)||0:initialSteps[initialId]||0,false);
+// A direct link into p3 needs its normal page entrance to paint the shadow tree.
+go(initial<0?0:initial,hashId?Number(hashStep)||0:initialSteps[initialId]||0,initialId==='connectivity');
 // Read-only inspection for validation; controls use the same public UI handlers.
 window.summit={getState:()=>({page:slides[page].id,...state(),paused}),version:'draft-02'};
