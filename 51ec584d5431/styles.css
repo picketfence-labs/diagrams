@@ -22,6 +22,7 @@
 #context-code .code-bulk{transition:opacity .7s ease}
 
 .cost-summary h2{font-size:54px;max-width:1448px}
+.cost-summary{padding-top:130px}
 .cost-summary .cost-lead{font-size:25px;line-height:1.5;color:var(--muted);margin-top:20px}
 .cost-pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:49px}
 .cost-pillar{min-height:286px;padding:27px 30px;background:#111713;border:1px solid #465347;border-top:3px solid var(--lime);border-radius:7px}
@@ -41,7 +42,9 @@
 /* Context Mesh review pages: same compact card and line vocabulary as p9. */
 #context-code .step-list,#context-architecture .step-list{gap:10px;margin-top:19px}
 #context-code .step-list span,#context-architecture .step-list span{font-size:18px;padding:8px 3px}
-#context-code .diagram,#context-architecture .diagram{height:420px;margin-top:16px}
+#context-code .diagram{height:420px;margin-top:16px}
+#context-architecture .diagram{height:465px;margin-top:16px}
+#context-code,#context-architecture{background:#000}
 #context-code .scene-caption,#context-architecture .scene-caption{font-size:24px!important;line-height:1.4!important;margin-top:8px!important;min-height:36px}
 .code-diagram .code-node,.architecture-diagram .arch-node,.architecture-diagram .arch-pod{fill:#111713;stroke:#4a4d49;stroke-width:2}
 .code-diagram .code-boundary{fill:#07150a;fill-opacity:.33;stroke:#ccff00;stroke-width:2}

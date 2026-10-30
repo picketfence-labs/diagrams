@@ -21,8 +21,9 @@
 :host .c-sentence{position:absolute;left:36px;top:91px;font-size:22px;color:#cdd4cb;line-height:1.3}
 :host .c-guide{position:absolute;height:1px;background:#4a4d49;opacity:.45}
 :host .c-guide-top{left:36px;top:140px;width:1330px}
-:host .c-guide-bottom{left:36px;top:641px;width:670px}
-:host .c-plane{position:absolute;left:36px;top:183px;width:1328px;height:442px;border:2px solid #ccff00;border-radius:8px;background:rgba(0,20,8,.16)}
+:host .c-guide-bottom{left:36px;top:690px;width:1330px}
+:host .c-caption{position:absolute;left:36px;top:713px;color:#ccff00;font-size:23px;font-weight:700;line-height:1.3}
+:host .c-plane{position:absolute;left:36px;top:183px;width:1328px;height:500px;border:2px solid #ccff00;border-radius:8px;background:rgba(0,20,8,.16)}
 :host .c-plane-title{position:absolute;left:22px;top:15px;color:#ccff00;font-size:18px;font-weight:800;letter-spacing:2px}
 :host .c-control{position:absolute;top:192px;height:39px;border:1.5px solid #ccff00;border-radius:5px;background:#001408;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
 :host #c-control{left:681px;width:185px}:host #c-observe{left:880px;width:133px}:host #c-cost{left:1027px;width:173px}
@@ -36,38 +37,38 @@
 :host .c-node.c-active{border-color:#ccff00}
 :host .c-node strong{display:block;font-size:24px;font-weight:700;line-height:1.25}
 :host .c-node>span{display:block;color:#cdd4cb;font-size:16px;margin-top:10px}
-:host .c-agent{left:545px;top:270px;width:300px;height:230px}
+:host .c-agent{left:545px;top:290px;width:300px;height:245px}
 :host .c-agent-row{position:absolute;left:26px;width:244px;height:41px;border:1.5px solid #4a4d49;border-radius:4px;background:#001408;padding:8px 16px;font-size:17px;color:#cdd4cb}
 :host .c-agent-request{top:107px}:host .c-agent-result{top:161px}
 :host(.is-request) .c-agent-request,:host(.is-result) .c-agent-result{border:2px solid #ccff00;background:#22351b;color:#fff;font-weight:700}
-:host #c-openai{left:75px;top:260px;width:280px;height:250px;border-radius:22px}
+:host #c-openai{left:75px;top:280px;width:280px;height:250px;border-radius:22px}
 :host #c-openai .c-openai-big-tag{font-size:15px;font-weight:700;letter-spacing:1px;margin-top:13px}
 :host #c-openai .c-llm-role{font-size:17px;margin-top:22px}
 :host #c-openai .c-openai-small-tag{position:absolute;right:26px;top:20px;font-size:15px;font-weight:700;letter-spacing:1px;margin:0;opacity:0}
-:host #c-claude{top:260px}:host #c-gemini{top:440px}:host #c-local{top:530px}
+:host #c-claude{top:275px}:host #c-gemini{top:470px}:host #c-local{top:565px}
 :host .c-model:not(#c-openai){left:75px;width:280px;height:72px;padding:18px 26px;display:flex;align-items:center;justify-content:space-between}
 :host .c-model:not(#c-openai)>span{font-size:15px;font-weight:700;letter-spacing:1px;margin:0}
-:host #c-api{left:1135px;top:360px;width:180px;height:100px;padding:17px 18px}
-:host #c-mcp{left:885px;top:360px;width:200px;height:100px;padding:17px 18px}
+:host #c-api{left:1135px;top:380px;width:180px;height:100px;padding:17px 18px}
+:host #c-mcp{left:885px;top:380px;width:200px;height:100px;padding:17px 18px}
 :host #c-api>span,:host #c-mcp>span{margin-top:4px}
-:host #c-peer{left:545px;top:530px;width:300px;height:80px;padding:13px 26px}
+:host #c-peer{left:545px;top:595px;width:300px;height:80px;padding:13px 26px}
 :host #c-peer>span{margin-top:2px}
 :host #c-flow-note{position:absolute;left:373px;top:334px;width:150px;text-align:center;white-space:nowrap;color:#cdd4cb;font-size:16px;font-weight:700}
 :host #c-flow-note span{display:block}:host #c-flow-note span+span{margin-top:35px}
 :host .c-hidden{opacity:0;pointer-events:none}:host .c-hidden.c-visible{opacity:1}
 :host .c-node.is-pulsing{border-color:#ccff00;border-width:4px}</style>
 <div class="c-canvas" role="img" aria-label="一つのAIエージェントからLLM、API、MCP、他のエージェントへ接続が広がる">
-<div class="c-title"></div><div class="c-sentence"></div><div class="c-guide c-guide-top"></div><div class="c-guide c-guide-bottom"></div>
+<div class="c-title"></div><div class="c-sentence"></div><div class="c-guide c-guide-top"></div><div class="c-guide c-guide-bottom"></div><div class="c-caption"></div>
 <div id="c-plane" class="c-plane c-hidden"><span class="c-plane-title">AI CONNECTIVITY</span></div>
 <div id="c-control" class="c-control c-hidden">アクセス制御</div><div id="c-observe" class="c-control c-hidden">観測</div><div id="c-cost" class="c-control c-hidden">コスト管理</div>
 <svg class="c-route-layer" viewBox="0 0 1400 760" aria-hidden="true"><g class="c-routes">
-  <path id="c-route-openai" class="c-route c-hidden" d="M545 386H355"/>
-  <path id="c-route-claude" class="c-route c-hidden" d="M545 386H445V296H355"/>
-  <path id="c-route-gemini" class="c-route c-hidden" d="M545 386H445V476H355"/>
-  <path id="c-route-local" class="c-route c-hidden" d="M545 386H445V566H355"/>
-  <path id="c-route-mcp" class="c-route c-hidden" d="M845 410H885"/>
-  <path id="c-route-api" class="c-route c-hidden" d="M1085 410H1135"/>
-  <path id="c-route-peer" class="c-route c-hidden" d="M695 500V530"/>
+  <path id="c-route-openai" class="c-route c-hidden" d="M545 411H355"/>
+  <path id="c-route-claude" class="c-route c-hidden" d="M545 411H445V311H355"/>
+  <path id="c-route-gemini" class="c-route c-hidden" d="M545 411H445V506H355"/>
+  <path id="c-route-local" class="c-route c-hidden" d="M545 411H445V601H355"/>
+  <path id="c-route-mcp" class="c-route c-hidden" d="M845 430H885"/>
+  <path id="c-route-api" class="c-route c-hidden" d="M1085 430H1135"/>
+  <path id="c-route-peer" class="c-route c-hidden" d="M695 535V595"/>
 </g><g id="c-packet" class="c-packet c-hidden"><circle r="11"/><circle class="c-packet-core" r="4"/></g></svg>
 <div id="c-agent" class="c-node c-agent"><strong>AIエージェント</strong><span>判断し、次の処理を進める</span><div class="c-agent-row c-agent-request">指示とルールを送る</div><div class="c-agent-row c-agent-result">処理結果を受け取る</div></div>
 <div id="c-openai" class="c-node c-model c-hidden"><strong>OpenAI</strong><span class="c-openai-big-tag">LLM</span><span class="c-llm-role">推論・生成</span><span class="c-openai-small-tag">LLM</span></div>
@@ -90,7 +91,7 @@
 :host .g-sentence{position:absolute;left:36px;top:91px;font-size:22px;color:#cdd4cb;line-height:1.3}
 :host .g-guide{position:absolute;height:1px;background:#4a4d49;opacity:.45}
 :host .g-guide-top{left:36px;top:140px;width:1330px}
-:host .g-guide-bottom{left:36px;top:641px;width:670px}
+:host .g-guide-bottom{left:36px;top:690px;width:1330px}
 :host .g-route-layer{position:absolute;inset:0;width:1400px;height:760px;overflow:visible;pointer-events:none}
 :host .g-route{fill:none;stroke:#768274;stroke-width:2;stroke-dasharray:7 7;stroke-linecap:butt}
 :host .g-route.g-hot{stroke:#ccff00;stroke-width:4;stroke-dasharray:none}
@@ -117,14 +118,14 @@
 :host .g-service{left:1105px;width:275px;height:100px;padding:18px 21px}
 :host .g-service strong{font-size:21px}
 :host .g-service span{font-size:15px}
-:host #g-sanitizer{top:180px}:host #g-guard{top:530px}
+:host #g-sanitizer{top:180px}:host #g-guard{top:560px}
 :host .g-hidden{opacity:0;pointer-events:none}
 :host .g-hidden.g-visible{opacity:1;pointer-events:auto}
 :host .g-notice{position:absolute;left:1155px;top:385px;width:215px;min-height:63px;border:2px solid #ccff00;border-radius:7px;background:#07180d;padding:11px 18px;font-size:19px;font-weight:700;line-height:1.2}
 :host .g-notice span{display:block;font-size:14px;font-weight:500;color:#cdd4cb;margin-top:4px}
 :host #g-packet circle{fill:#ccff00}:host #g-packet.g-alert circle{fill:#ff936d}
 :host #g-packet text{fill:#ccff00;paint-order:stroke;stroke:#000;stroke-width:3;font-size:15px;font-weight:800;text-anchor:middle}
-:host .g-caption{position:absolute;left:36px;top:665px;color:#ccff00;font-size:23px;font-weight:700}</style>
+:host .g-caption{position:absolute;left:36px;top:713px;color:#ccff00;font-size:23px;font-weight:700}</style>
 <div class="g-canvas">
 <div id="g-title" class="g-title"></div><div id="g-sentence" class="g-sentence"></div><div class="g-guide g-guide-top"></div><div class="g-guide g-guide-bottom"></div>
 <svg class="g-route-layer" viewBox="0 0 1400 760" aria-hidden="true"><g>
@@ -191,18 +192,19 @@
 <section class="slide standard motion-slide" id="context-architecture" data-title="Context Meshの配置と通信経路" data-component="architecture">
 <p class="eyebrow">CONTEXT MESH / HOW IT WORKS</p><h2>GatewayとMCP Serverは、別のPodで動く。</h2>
 <div class="step-list"><span>1 Konnect CP</span><span>2 Kong Operator</span><span>3 Agent → DP</span><span>4 MCP → API</span><span>5 結果を返す</span></div>
-<svg class="diagram architecture-diagram" viewBox="0 0 1448 420" role="img" aria-label="KonnectのControl Plane、Kong Operatorが管理するKubernetes Cluster内の別々のData Plane PodとCode Mode MCP Server Pod。AgentとMCP ServerからのAPI通信はData Planeを経由する">
-<g data-part="control"><rect class="arch-node arch-control" x="340" y="5" width="470" height="85" rx="7"/><text class="arch-heading" x="365" y="40">Konnect / Control Plane</text><text class="arch-muted" x="365" y="69">Source・MCP Server・Gateway設定</text></g>
-<rect class="arch-cluster" x="230" y="125" width="905" height="283" rx="8"/><text class="arch-cluster-label" x="250" y="153">KUBERNETES CLUSTER</text>
-<path class="arch-management" d="M440 90V169M530 195H875M530 220H590V300"/><path class="arch-config" d="M730 90V300"/>
-<text class="arch-route-label" x="456" y="111">Konnect API</text><text class="arch-route-label" x="742" y="111">設定同期 / WSS</text>
-<g data-part="operator"><rect class="arch-node" x="290" y="169" width="240" height="77" rx="6"/><text class="arch-heading" x="311" y="203">Kong Operator</text><text class="arch-muted" x="311" y="230">2種類のPodを管理</text></g>
-<g data-part="agent"><rect class="arch-node" x="15" y="300" width="190" height="94" rx="6"/><text class="arch-heading" x="38" y="339">AI Agent</text><text class="arch-muted" x="38" y="369">MCP Client</text></g>
-<path class="arch-traffic" d="M205 348H550M805 324H845V252H875M805 367H1195"/>
-<g data-part="gateway"><rect class="arch-node" x="550" y="300" width="255" height="94" rx="6"/><text class="arch-heading" x="573" y="334">Data Plane Pod</text><text class="arch-muted" x="573" y="360">Kong Gateway</text><text class="arch-mini" x="573" y="381">MCP / 上流APIを中継</text></g>
-<g data-part="server"><rect class="arch-pod" x="875" y="160" width="250" height="172" rx="6"/><text class="arch-heading" x="892" y="191">MCP Server Pod</text><rect class="arch-sandbox" x="892" y="207" width="215" height="39" rx="3"/><text class="arch-mini" x="903" y="231">Init container</text><text class="arch-mini" x="903" y="244">生成コードを取得</text><rect class="arch-sandbox" x="892" y="252" width="215" height="64" rx="3"/><text class="arch-mini" x="903" y="274">Runner container</text><text class="arch-mini" x="903" y="293">Code Mode MCP</text><text class="arch-mini" x="903" y="310">プロセス内Sandbox</text></g>
-<g data-part="apis"><rect class="arch-node" x="1195" y="300" width="238" height="94" rx="6"/><text class="arch-heading" x="1216" y="339">業務 API</text><text class="arch-muted" x="1216" y="369">クラスタ外でも可</text></g>
-<text class="arch-route-label" x="258" y="333">MCP要求</text><text class="arch-route-label" x="873" y="359">API呼出しもDP経由</text>
+<svg class="diagram architecture-diagram" viewBox="0 0 1448 465" role="img" aria-label="Konnect Control PlaneからOperatorへ構成を渡し、Data Plane Podへ設定を同期。Kubernetes Clusterの別Podで動くData PlaneとCode Mode MCPが、Agentおよび業務APIの通信を中継する">
+<g data-part="control"><rect class="arch-node arch-control" x="430" y="5" width="580" height="88" rx="7"/><text class="arch-heading" x="455" y="41">Konnect / Control Plane</text><text class="arch-muted" x="455" y="71">Source・MCP Server・Gateway設定</text></g>
+<rect class="arch-cluster" x="260" y="130" width="900" height="325" rx="8"/><text class="arch-cluster-label" x="280" y="159">KUBERNETES CLUSTER</text>
+<path class="arch-management" d="M505 93V174M482 247V306M615 210H773V284H810"/><path class="arch-config" d="M740 93V282H625V306"/>
+<text class="arch-route-label" x="514" y="118">Konnect API</text><text class="arch-route-label" x="754" y="117">設定同期 / WSS</text>
+<g data-part="operator"><rect class="arch-node" x="350" y="174" width="265" height="73" rx="6"/><text class="arch-heading" x="371" y="206">Kong Operator</text><text class="arch-muted" x="371" y="231">Podを配置・管理</text></g>
+<text class="arch-route-label" x="665" y="201">Podの管理</text>
+<g data-part="agent"><rect class="arch-node" x="20" y="314" width="205" height="100" rx="6"/><text class="arch-heading" x="43" y="353">AI Agent</text><text class="arch-muted" x="43" y="382">MCP Client</text></g>
+<path class="arch-traffic" d="M225 364H370M640 346H810M640 390V430H1185V364H1210"/>
+<g data-part="gateway"><rect class="arch-node" x="370" y="306" width="270" height="108" rx="6"/><text class="arch-heading" x="393" y="342">Data Plane Pod</text><text class="arch-muted" x="393" y="370">Kong Gateway</text><text class="arch-mini" x="393" y="397">MCP・API通信を中継</text></g>
+<g data-part="server"><rect class="arch-pod" x="810" y="215" width="320" height="172" rx="6"/><text class="arch-heading" x="831" y="246">MCP Server Pod</text><rect class="arch-sandbox" x="831" y="262" width="278" height="39" rx="3"/><text class="arch-mini" x="842" y="279">Init container</text><text class="arch-mini" x="960" y="290">生成コードを取得</text><rect class="arch-sandbox" x="831" y="307" width="278" height="64" rx="3"/><text class="arch-mini" x="842" y="327">Runner container / Code Mode MCP</text><text class="arch-mini" x="842" y="355">プロセス内Sandboxでコード実行</text></g>
+<g data-part="apis"><rect class="arch-node" x="1210" y="314" width="210" height="100" rx="6"/><text class="arch-heading" x="1233" y="353">業務 API</text><text class="arch-muted" x="1233" y="382">業務データ</text></g>
+<text class="arch-route-label" x="249" y="353">MCP要求</text><text class="arch-route-label" x="674" y="335">MCP</text><text class="arch-route-label" x="905" y="417">API呼出しもData Plane経由</text>
 </svg><p class="scene-caption"></p>
 <p class="source"><a href="https://developer.konghq.com/context-mesh/get-started/" target="_blank" rel="noopener">Context Mesh導入ガイド</a> · <a href="https://developer.konghq.com/operator/reference/architecture/" target="_blank" rel="noopener">Kong Operator構成</a> · <a href="https://github.com/picketfence-labs/konnect-code-mode-mcp/blob/main/CODE_MODE.md" target="_blank" rel="noopener">Code Mode実装分析</a></p>
 </section>

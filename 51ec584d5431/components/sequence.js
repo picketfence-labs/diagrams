@@ -66,13 +66,13 @@ export function mountSequence(slide, specification, onChange = () => {}) {
 export const sequences = {
   architecture: {
     states:['Konnectが構成を管理','Operatorが2種類のPodを管理','AgentのMCP要求','MCP ServerからAPIを呼ぶ','加工した結果を返す'],
-    captions:['KonnectがSource・MCP Server・Gatewayを管理。設定はCPからData Planeへ直接同期される。','Kong OperatorがGatewayのDP Podと、Init/Runnerを持つ別のMCP Server Podを配置・管理する。','AgentのMCP要求はGatewayのData Planeを通り、MCP Server Podへ届く。','Code ModeのTool呼出しはData Planeを通って業務APIへ。APIはクラスタ外でもよい。','必要な加工を適用した結果がMCP ServerからData Plane経由でAgentへ返る。'],
+    captions:['Konnectが構成を管理し、Data Planeへ設定を直接同期する。','Kong OperatorがGatewayとMCP Serverを別々のPodとして管理する。','AgentのMCP要求はData PlaneからCode Mode MCPへ届く。','Code ModeのAPI呼出しもData Planeを経由する。','加工済みの結果だけが、同じ経路でAgentへ戻る。'],
     highlights:[['control'],['operator','gateway','server'],['agent','gateway','server'],['server','gateway','apis'],['server','gateway','agent']],
     paths:{
-      1:[[[440,90],[440,169]],[[530,220],[590,220],[590,300]],[[530,195],[875,195]],[[730,90],[730,300]]],
-      2:[[[205,348],[550,348],[680,348],[805,324],[845,324],[845,252],[875,252]]],
-      3:[[[875,252],[845,252],[845,324],[805,324],[680,348],[805,367],[1195,367]],[[1195,367],[805,367],[680,348],[805,324],[845,324],[845,252],[875,252]]],
-      4:[[[875,252],[845,252],[845,324],[805,324],[680,348],[550,348],[205,348]]]
+      1:[[[505,93],[505,174]],[[482,247],[482,306]],[[615,210],[773,210],[773,284],[810,284]],[[740,93],[740,282],[625,282],[625,306]]],
+      2:[[[225,364],[370,364],[505,364],[640,346],[810,346]]],
+      3:[[[810,346],[640,346],[640,390],[640,430],[1185,430],[1185,364],[1210,364]],[[1210,364],[1185,364],[1185,430],[640,430],[640,390],[640,346],[810,346]]],
+      4:[[[810,346],[640,346],[505,364],[370,364],[225,364]]]
     }
   }
 };

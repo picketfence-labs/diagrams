@@ -11,9 +11,18 @@ export function mountConnectivity(slide, onChange = () => {}) {
     ['Agent同士もつながる', '通信相手に、別のAIエージェントが加わります。'],
     ['接続を、面で捉える', '増えた経路に、アクセス制御・観測・コスト管理が要ります。']
   ];
+  const captions = [
+    '接続を起点から捉える。',
+    'AgentとLLMの間で、要求と結果が往復する。',
+    'Agentを変えずに、複数のLLMへ接続する。',
+    '接続はLLMからMCP・APIへ広がる。',
+    'Agent同士の通信も同じ全体像に入る。',
+    'すべての接続に制御・観測・コスト管理が必要になる。'
+  ];
   const $ = id => root.querySelector('#' + id);
   const title = root.querySelector('.c-title');
   const sentence = root.querySelector('.c-sentence');
+  const caption = root.querySelector('.c-caption');
   const packet = $('c-packet');
   const stages = {
     1: ['c-openai', 'c-route-openai'],
@@ -37,7 +46,7 @@ export function mountConnectivity(slide, onChange = () => {}) {
   }
   function shapeOpenAI(t) {
     const node = $('c-openai');
-    node.style.top = `${260 + 90 * t}px`;
+    node.style.top = `${280 + 95 * t}px`;
     node.style.height = `${250 - 178 * t}px`;
     node.style.borderRadius = `${22 - 14 * t}px`;
     node.style.paddingTop = `${25 - 7 * t}px`;
@@ -65,6 +74,7 @@ export function mountConnectivity(slide, onChange = () => {}) {
     else { show('c-flow-note'); host.classList.add('is-result'); }
     title.textContent = scenes[step][0];
     sentence.textContent = scenes[step][1];
+    caption.textContent = captions[step];
     host.classList.toggle('c-governed', step === 5);
     slide.dataset.step = String(step);
     slide.dataset.busy = String(busy);
@@ -141,6 +151,7 @@ export function mountConnectivity(slide, onChange = () => {}) {
     busy = true;
     title.textContent = scenes[step][0];
     sentence.textContent = scenes[step][1];
+    caption.textContent = captions[step];
     slide.dataset.step = String(step);
     slide.dataset.busy = 'true';
     onChange(snapshot());
