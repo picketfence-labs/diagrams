@@ -5,9 +5,9 @@ export function mountP1(host, onChange = () => {}) {
   'use strict';
   // v0.1 Client→Server was 978 units / 650 ms ≈ 1505 units/s; use ~17% slower.
   const NS='http://www.w3.org/2000/svg', SPEED=1250;
-  const codes=[0,1,2,3,4,6,7,8,9,10.1,10.2,11,12];
-  const ids=['initial','agent-llm','external-data','mcp-components','tool-discovery','tool-request','tool-result','tool-loop','refocus','llm-processing','llm-result','sprawl','bloat'];
-  const titles=['AIエージェント','AIエージェントとLLM','処理に必要な外部データ','APIごとのMCP Server','各ServerのTool一覧を取得','LLMからAPI実行を依頼','取得結果をLLMへ渡す','複数のAPIからデータを取得','取得後の処理へ注目','LLMによるデータの集計・加工','処理結果をエージェントへ返す','Context Sprawl','Context Bloat'];
+  const codes=[0,1,2,3,4,6,7,8,9,10.1,10.2,11,11.1,12];
+  const ids=['initial','agent-llm','external-data','mcp-components','tool-discovery','tool-request','tool-result','tool-loop','refocus','llm-processing','llm-result','sprawl-servers','sprawl-search','bloat'];
+  const titles=['AIエージェント','AIエージェントとLLM','処理に必要な外部データ','APIごとのMCP Server','各ServerのTool一覧を取得','LLMからAPI実行を依頼','取得結果をLLMへ渡す','複数のAPIからデータを取得','取得後の処理へ注目','LLMによるデータの集計・加工','処理結果をエージェントへ返す','Context Sprawl — MCP Serverが増える','Context Sprawl — LLMがToolを探す','Context Bloat'];
   const descriptions=[
     '業務処理を進めるAIエージェントから見ていきます。',
     'エージェントが入力を渡し、LLMが判断・データ取得・処理を進めます。',
@@ -20,7 +20,8 @@ export function mountP1(host, onChange = () => {}) {
     '接続の詳細を外し、取得したデータを扱うLLMとエージェントへ注目します。',
     '取得データを選別・突合・並べ替えます。処理後に停止し、次の操作で結果を返します。',
     'LLMで集計・加工した結果を、エージェントへ返します。',
-    '多くのMCP ServerとToolが接続され、LLMは多数の定義から必要なToolを選びます。',
+    'MCP Serverが次々と追加されます。ここで停止し、次のフリップでLLM側を見ます。',
+    'LLMは増えたTool定義から、必要なものを選びます。',
     'Tool定義に取得データが積み上がり、LLMが扱う情報量と処理の負担が増えます。'
   ];
   const toolNames=['顧客検索','顧客詳細','契約一覧','契約更新','利用履歴','利用集計','請求一覧','拠点検索','在庫照会','申請登録','履歴検索','案件一覧'];
@@ -32,8 +33,8 @@ export function mountP1(host, onChange = () => {}) {
       agent:c===0?[560,200,1,1]:intro?[850,200,1,1]:c===12?[950,180,1,1]:focus?[910,180,1.05,1]:[446,200,1,1],
       llm:intro?[180,200,1.25,c?1:0]:c===12?[70,180,1,1]:focus?[100,180,1.45,1]:[36,200,1,1],
       servers:[836,347,1,c>=3&&!focus?1:0],apis:[1126,347,1,c>=2&&!focus?1:0],
-      client:c>=3&&!focus?1:0,links:c>=3&&!focus?1:0,tools:c>=4&&c!==11&&c!==12?1:0,
-      data:c>=8?3:c>=7?1:0,extra:c===11?1:0,cloud:c===11||c===12?1:0,
+      client:c>=3&&!focus?1:0,links:c>=3&&!focus?1:0,tools:c>=4&&c!==11&&c!==11.1&&c!==12?1:0,
+      data:c>=8?3:c>=7?1:0,extra:c===11||c===11.1?1:0,cloud:c===11.1||c===12?1:0,
       process:processing?1:0,result:c===10.2?1:0,ready:processing?1:0,opCount:processing?3:0,
       listed:c>=4?3:0,context:c===12?1:0,reshape:c===12?1:0,bloat:c===12?1:0,load:c===12?1:0,work:c===12?1:0,impacts:c===12?4:processing?2:0,
     };
@@ -68,7 +69,7 @@ export function mountP1(host, onChange = () => {}) {
           <text x="25" y="241" class="process-line" data-op="2">ORDER BY — 順に並べる</text></g>
         <g data-el="llm-result"><text x="24" y="291" class="result-label">集計・加工した結果を返す</text></g>
         <g data-el="tool-cloud">${toolNames.map((t,n)=>`<g data-tool="${n}" transform="translate(${24+(n%2)*120} ${98+Math.floor(n/2)*27})"><rect width="112" height="23" rx="3" class="tool-chip"/><text x="10" y="16" class="tool-name">${t}</text></g>`).join('')}
-          <text x="24" y="288" class="choice-note">必要なToolを選びにくい</text><text x="247" y="291" class="question-mark">?</text></g>
+          <text x="24" y="288" class="choice-note">Tool選択の精度と負荷</text><text x="247" y="291" class="question-mark">↑</text></g>
         <g data-el="bloat"><rect x="18" y="94" width="170" height="272" rx="5" class="bloat-bg"/>
           <text x="30" y="119" class="data-label">Tool定義</text>
           <rect data-data-panel x="210" y="94" width="440" height="272" rx="5" class="bloat-bg"/>
@@ -123,7 +124,7 @@ export function mountP1(host, onChange = () => {}) {
     root.querySelectorAll('[data-impact]').forEach((e,n)=>e.style.opacity=Math.max(0,Math.min(1,s.impacts-n)));
     root.querySelectorAll('[data-listed]').forEach((e,n)=>e.style.opacity=n<s.listed?1:0);
     root.querySelectorAll('[data-op]').forEach((e,n)=>e.style.opacity=n<s.opCount?1:0);
-    el('[data-el="llm-result"] text',root).textContent=c===10.1?'処理完了 — 次の操作で返却':'集計・加工した結果を返す';
+    el('[data-el="llm-result"] text',root).textContent=c===10.1?'集計・加工した結果を返す':'集計・加工した結果を返す';
     el('[data-el="tool-cloud"]',root).setAttribute('transform',`translate(${8*s.context} ${80*s.context}) scale(${1-.37*s.context})`);
     root.querySelectorAll('.choice-note,.question-mark').forEach(e=>e.style.opacity=1-s.context);
     el('[data-data-panel]',root).setAttribute('width',Math.max(40,llmWidth-240));
@@ -138,7 +139,7 @@ export function mountP1(host, onChange = () => {}) {
     el('[data-el="tools"] text',root).textContent=processing?'取得済み: 顧客 / 実績 / 契約':'Tool名 / 引数 / 返却情報';
     el('.scene-title',root).textContent=titles[i];el('title',root).textContent=titles[i];el('.sentence',root).textContent=descriptions[i];
     el('.packet-status',root).setAttribute('transform',processing?'translate(620 563)':c===12?'translate(790 135)':'translate(36 660)');el('.packet-status rect',root).setAttribute('width',c===12?560:620);
-    candidate(c===11?[2,7,10]:[],root);routes(s,root);
+    candidate(c===11.1?[2,7,10]:[],root);routes(s,root);
   }
   function interpolate(a,b,t){const s={};for(const k of Object.keys(b))s[k]=Array.isArray(b[k])?b[k].map((v,n)=>a[k][n]+(v-a[k][n])*t):a[k]+(b[k]-a[k])*t;return s;}
   const animate=(ms,token,draw)=>new Promise(resolve=>{
@@ -147,12 +148,12 @@ export function mountP1(host, onChange = () => {}) {
   const hop=(name,reverse,label)=>({name,reverse,label});
   const request=n=>[hop('llm',false,'LLMから実行を依頼'),hop('handoff',false,'Agent内のMCP Clientへ'),hop(`mcp${n}`,false,'ClientからMCP Serverへ'),hop(`server-handoff${n}`,false,'MCP ServerがAPIを呼出し'),hop(`api${n}`,false,'APIを実行')];
   const response=n=>[hop(`api${n}`,true,'APIの結果を返却'),hop(`server-handoff${n}`,true,'MCP Serverが結果を返却'),hop(`mcp${n}`,true,'MCP Clientへ返却'),hop('handoff',true,'Agentが結果を受信'),hop('llm',true,'LLMの入力に追加')];
-  async function travel(hops,token){
+  async function travel(hops,token,speedMultiplier=1){
     if(token!==generation)return false;
     const segments=hops.map(h=>({...h,element:el(`[data-path="${h.name}"]`)}));
     let total=0;for(const h of segments){h.start=total;h.length=h.element.getTotalLength();total+=h.length;}
     const dot=el('.packet'),legend=el('.packet-status');dot.setAttribute('visibility','visible');legend.setAttribute('visibility','visible');let active;
-    const ok=await animate(total/SPEED*1000,token,t=>{
+    const ok=await animate(total/SPEED*1000/speedMultiplier,token,t=>{
       const distance=t*total,h=segments.find(h=>distance<h.start+h.length)||segments.at(-1);
       if(active!==h){if(active)active.element.classList.remove('active');h.element.classList.add('active');active=h;el('text',legend).textContent=h.label;}
       const local=Math.max(0,Math.min(h.length,distance-h.start)),point=h.element.getPointAtLength(h.reverse?h.length-local:local);
@@ -180,7 +181,7 @@ export function mountP1(host, onChange = () => {}) {
     if(c===7){showData(0);if(await travel(response(0),token))showData(1);}
     if(c===8){showData(1);for(let n=1;n<=2;n++){if(!await travel([...request(n),...response(n)],token))return;showData(n+1);}}
     if(c===10.1){
-      for(let n=0;n<3;n++){render({...state(i),opCount:n+1,ready:0});svg.querySelectorAll('[data-op]').forEach((e,k)=>e.classList.toggle('op-active',k===n));if(!await animate(1000,token))return;}
+      for(let n=0;n<3;n++){render({...state(i),opCount:n+1,ready:0});svg.querySelectorAll('[data-op]').forEach((e,k)=>e.classList.toggle('op-active',k===n));if(!await animate(2000,token))return;}
     }
     if(c===10.2){
       el('[data-el="agent-result"]').style.opacity=0;
@@ -189,10 +190,13 @@ export function mountP1(host, onChange = () => {}) {
     if(c===11){
       const base={...state(i),cloud:0,extra:0,tools:1,data:3};
       if(!await animate(500,token,t=>render({...base,extra:t})))return;
-      if(!await animate(150,token,t=>render({...base,extra:1,tools:1-t,data:t<.9?3:0})))return;
-      render({...state(i),cloud:1});svg.querySelectorAll('[data-tool]').forEach(e=>e.style.opacity=0);
-      if(!await animate(650,token,t=>svg.querySelectorAll('[data-tool]').forEach((e,n)=>e.style.opacity=t*12>=n?1:0)))return;
-      for(const n of [1,7,3,10,4]){candidate([n]);if(!await animate(280,token))return;}
+      await animate(950,token);
+    }
+    if(c===11.1){
+      const base={...state(i),cloud:0,extra:1,tools:0,data:0};
+      render(base);svg.querySelectorAll('[data-tool]').forEach(e=>e.style.opacity=0);
+      if(!await animate(1300,token,t=>svg.querySelectorAll('[data-tool]').forEach((e,n)=>e.style.opacity=t*12>=n?1:0)))return;
+      for(const n of [1,7,3,10,4]){candidate([n]);if(!await animate(560,token))return;}
       candidate([2,7,10]);
     }
     if(c===12){
@@ -201,12 +205,12 @@ export function mountP1(host, onChange = () => {}) {
       if(!await animate(300,token,t=>paint({bloat:t},'Tool定義を保持したまま、APIの取得データが加わります。')))return;
       let load=0;
       for(let n=0;n<3;n++){
-        if(!await travel([hop('llm',true,`${['顧客','利用実績','契約'][n]}の取得データをLLMへ追加`)],token))return;
+        if(!await travel([hop('llm',true,`${['顧客','利用実績','契約'][n]}の取得データをLLMへ追加`)],token,3))return;
         const next=(n+1)/3;
-        if(!await animate(350,token,t=>paint({bloat:1,load:load+(next-load)*t,reshape:.5+(load+(next-load)*t)*.5,impacts:n+1},n===2?'必要なデータだけでなく、機微情報を含む場合もあります。':'取得データが積み上がり、LLMが扱う情報量が増えます。')))return;
+        if(!await animate(700,token,t=>paint({bloat:1,load:load+(next-load)*t,reshape:.5+(load+(next-load)*t)*.5,impacts:n+1},n===2?'必要なデータだけでなく、機微情報を含む場合もあります。':'取得データが積み上がり、LLMが扱う情報量が増えます。')))return;
         load=next;
       }
-      if(!await animate(1500,token,t=>paint({bloat:1,load:1,reshape:1,work:t,impacts:t>.8?4:3},'大量のデータを読み、突き合わせる作業までLLMが担います。')))return;
+      if(!await animate(3000,token,t=>paint({bloat:1,load:1,reshape:1,work:t,impacts:t>.8?4:3},'大量のデータを読み、突き合わせる作業までLLMが担います。')))return;
     }
   }
   function clean(){svg.querySelectorAll('.packet').forEach(e=>e.setAttribute('visibility','hidden'));svg.querySelectorAll('.active,.op-active').forEach(e=>e.classList.remove('active','op-active'));svg.querySelectorAll('[data-tool]').forEach(e=>e.style.opacity=1);delete app.dataset.route;delete app.dataset.direction;}
@@ -215,7 +219,7 @@ export function mountP1(host, onChange = () => {}) {
     $('#position').textContent=`P1 / ${app.dataset.code} · ${index+1}/${codes.length}`;
     $('#prev').disabled=index===0;$('#next').disabled=index===codes.length-1||busy;$('#replay').disabled=index===0||busy;
     $('#next').textContent=codes[index]===10.1?'結果を返す ↓':'次へ ↓';
-    $('#status').textContent=busy?'動作中 — 終了後に停止します':codes[index]===10.1?'処理完了 — 次の操作で返却':index===codes.length-1?'P1の最終状態':'停止中 — 下矢印で次へ';$('#note').textContent=descriptions[index];
+    $('#status').textContent=busy?'動作中 — 終了後に停止します':codes[index]===10.1?'結果を確認 — 次の操作で返却':index===codes.length-1?'P1の最終状態':'停止中 — 下矢印で次へ';$('#note').textContent=descriptions[index];
     onChange({step:index,busy,count:codes.length,title:titles[index],code:codes[index]});
   }
   function jump(i){generation++;busy=false;clean();index=Math.max(0,Math.min(codes.length-1,i));current=state(index);render(current);update();}
@@ -224,7 +228,7 @@ export function mountP1(host, onChange = () => {}) {
     const from=replay?state(index-1):current;if(!replay)index++;
     const target=state(index),token=++generation,c=codes[index];busy=true;clean();update();
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,visual={...target};
-    if(!reduced){if(c===4){visual.tools=0;visual.listed=0;}if(c===7||c===8)visual.data=from.data;if(c===10.1){visual.ready=0;visual.opCount=0;}if(c===10.2)visual.result=0;if(c===11){visual.extra=0;visual.cloud=0;visual.tools=1;visual.data=3;}if(c===12){visual.reshape=.5;visual.bloat=0;visual.load=0;visual.work=0;visual.impacts=0;}}
+    if(!reduced){if(c===4){visual.tools=0;visual.listed=0;}if(c===7||c===8)visual.data=from.data;if(c===10.1){visual.ready=0;visual.opCount=0;}if(c===10.2)visual.result=0;if(c===11){visual.extra=0;visual.cloud=0;visual.tools=1;visual.data=3;}if(c===11.1){visual.extra=1;visual.cloud=0;visual.tools=0;visual.data=0;}if(c===12){visual.reshape=.5;visual.bloat=0;visual.load=0;visual.work=0;visual.impacts=0;}}
     const moving=JSON.stringify(from.agent)!==JSON.stringify(target.agent)||JSON.stringify(from.llm)!==JSON.stringify(target.llm);
     const ok=await animate(reduced?1:moving?750:220,token,t=>render(interpolate(from,visual,t*t*(3-2*t))));if(!ok)return;
     current=target;if(!reduced)await flow(index,token);if(token!==generation)return;

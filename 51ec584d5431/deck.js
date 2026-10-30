@@ -100,4 +100,4 @@ const initialId=hashId||saved.page||slides[0].id;const initial=slides.findIndex(
 const initialSteps={...saved.steps};
 go(initial<0?0:initial,hashId?Number(hashStep)||0:initialSteps[initialId]||0,false);
 // Read-only inspection for validation; controls use the same public UI handlers.
-window.summit={getState:()=>({page:slides[page].id,...state(),paused}),version:'draft-01'};
+window.summit={getState:()=>({page:slides[page].id,...state(),paused}),version:'draft-02'};
