@@ -1,2 +1,78 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>API + AI Summit Japan 2026</title><style>html{color-scheme:dark}body{margin:0;min-height:100vh;display:grid;place-content:center;background:#000;color:#fff;font:20px/1.6 system-ui,sans-serif;padding:0 8vw}p{color:#c8ff00;font-size:14px;letter-spacing:.12em}h1{font-size:clamp(30px,5vw,64px);line-height:1.15;max-width:18ch}small{color:#aaa}</style></head><body><main><p>API + AI SUMMIT JAPAN 2026</p><h1>登壇資料を準備中</h1><small>資料はこのURLで公開予定です。</small></main></body></html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark"><title>AIエージェントとConnectivity | API + AI Summit Japan 2026</title><link rel="icon" href="./images/kong-mark.png"><link rel="stylesheet" href="./styles.css"></head>
+<body>
+<main id="viewport" aria-label="登壇スライド"><div id="stage">
+<section class="slide cover" id="title" data-title="AIエージェントとConnectivity">
+<img class="cover-pattern" src="./images/cover-pattern.png" alt=""><img class="cover-logo" src="./images/event-logo.png" alt="API + AI Summit '26">
+<h1>AIエージェントと<br>Connectivity</h1><div class="japan">Japan</div><p class="speaker-line">Ned Shawa / Shinichi Hashitani<br>Kong · 2026.11.19</p><img class="kong-mark" src="./images/kong-mark.png" alt="Kong"><span class="draft-tag">DRAFT 01</span>
+</section>
+<section class="slide speakers" id="speakers" data-title="自己紹介 · 2名">
+<article class="speaker-card"><h2 class="gradient">Ned Shawa</h2><img class="portrait-placeholder" src="./images/ned-shawa.png" alt="Ned Shawa"><p>肩書・紹介文は後続反映</p></article><article class="speaker-card second"><h2 class="gradient">Shinichi Hashitani</h2><img class="portrait-placeholder" src="./images/shinichi-hashitani.png" alt="Shinichi Hashitani"><p>肩書・紹介文は後続反映</p></article>
+</section>
+<section class="slide standard" id="connectivity" data-title="接続を、点から面へ" data-component="ecosystem">
+<p class="eyebrow">AI CONNECTIVITY</p><h2>接続を、点から面へ。</h2><p class="subline">AIエージェントをスケールさせるには、エコシステム全体を見る。</p>
+<svg class="diagram" viewBox="0 0 1448 500" aria-label="AgentとLLM、他のAgent、APIを含む接続の全体像">
+<g data-reveal="2"><rect class="plane" x="10" y="12" width="1428" height="418" rx="24"/><text class="tiny" x="40" y="52">共通して考える範囲：アクセス制御・運用・可観測性・コスト</text></g>
+<path class="flow" d="M495 220H320"/><g data-reveal="1"><path class="route" d="M795 220H1100M645 300V370H1100V300"/></g>
+<g><rect class="box bright" x="495" y="145" width="300" height="155" rx="16"/><text class="label" x="645" y="209" text-anchor="middle">AIエージェント</text><text class="detail" x="645" y="257" text-anchor="middle">判断と実行の起点</text></g>
+<g><rect class="box" x="50" y="145" width="270" height="155" rx="16"/><text class="label" x="185" y="209" text-anchor="middle">LLM</text><text class="detail" x="185" y="257" text-anchor="middle">推論・生成</text></g>
+<g data-reveal="1"><rect class="box" x="1100" y="105" width="280" height="115" rx="16"/><text class="label" x="1240" y="173" text-anchor="middle">他のエージェント</text><rect class="box" x="1100" y="260" width="280" height="115" rx="16"/><text class="label" x="1240" y="309" text-anchor="middle">API・業務データ</text><text class="detail" x="1240" y="350" text-anchor="middle">Context</text></g>
+<text class="tiny" x="15" y="473">概念図：すべての通信が単一コンポーネントを通る、という意味ではありません。</text></svg><p class="scene-caption"></p>
+</section>
+<section class="slide divider" id="llm" data-title="01 · LLM Connectivity"><p class="eyebrow">01</p><h2 class="gradient">LLM Connectivity</h2><p class="subline">安全に使い、コストを理解する。</p></section>
+<section class="slide standard" id="guardrails" data-title="つながる、その先のガードレール">
+<p class="eyebrow">LLM CONNECTIVITY</p><h2>「つながる」の先に、ガードレールを。</h2><svg class="diagram" viewBox="0 0 1448 500" aria-label="エージェントとLLMの間にAI Gatewayを配置">
+<path class="flow" d="M350 170H560M890 170H1110"/><rect class="box" x="50" y="90" width="300" height="160" rx="14"/><text class="label" x="200" y="180" text-anchor="middle">AIエージェント</text><rect class="box bright" x="560" y="65" width="330" height="210" rx="14"/><text class="label" x="725" y="150" text-anchor="middle">Kong AI Gateway</text><text class="detail" x="725" y="201" text-anchor="middle">LLM接続の制御点</text><rect class="box" x="1110" y="90" width="280" height="160" rx="14"/><text class="label" x="1250" y="180" text-anchor="middle">LLM / Models</text>
+<text class="label" x="75" y="375">アクセス</text><text class="detail" x="75" y="423">誰が、何を使えるか</text><text class="label" x="565" y="375">入出力</text><text class="detail" x="565" y="423">どんな内容を通すか</text><text class="label" x="1080" y="375">消費と運用</text><text class="detail" x="1080" y="423">どれだけ、どう使うか</text></svg>
+<p class="takeaway">セキュリティと経済性を、接続の設計に含める。</p><p class="source"><a href="https://developer.konghq.com/ai-gateway/" target="_blank" rel="noopener">Source: Kong AI Gateway Docs</a></p>
+</section>
+<section class="slide standard" id="cost-demo" data-title="DEMO 1 · AI Cost Management" data-demo="AI Cost Management">
+<p class="eyebrow">AI COST MANAGEMENT</p><h2>費用の総額から、使い道の理解へ。</h2><div class="columns"><article><p class="number">01 / ATTRIBUTE</p><h3>誰が使ったか</h3><p>チーム・アプリケーション・<br>エージェントに結びつける。</p></article><article><p class="number">02 / PLAN</p><h3>予算内か</h3><p>利用の実績を、<br>業務の予算と照らし合わせる。</p></article><article><p class="number">03 / ACT</p><h3>次に何を変えるか</h3><p>増加の理由を理解し、<br>運用の判断につなげる。</p></article></div><div class="demo-callout"><span>DEMO 01</span>Konnect Cost Managementの画面へ</div><p class="source"><a href="https://konghq.com/products/ai-cost-management" target="_blank" rel="noopener">Source: Kong AI Cost Management</a></p>
+</section>
+<section class="slide standard" id="cost-flow" data-title="コストを運用の判断へつなぐ">
+<p class="eyebrow">AFTER THE DEMO</p><h2>消費を、業務の単位で捉える。</h2><svg class="diagram" viewBox="0 0 1448 500" aria-label="AI Gatewayでの消費計測とCost Managementでの分析">
+<path class="flow" d="M330 128H540M890 128H1110"/><rect class="box" x="30" y="53" width="300" height="150" rx="14"/><text class="label" x="180" y="142" text-anchor="middle">AIエージェント</text><rect class="box bright" x="540" y="38" width="350" height="180" rx="14"/><text class="label" x="715" y="110" text-anchor="middle">AI Gateway</text><text class="detail" x="715" y="160" text-anchor="middle">モデル利用と消費を計測</text><rect class="box" x="1110" y="53" width="300" height="150" rx="14"/><text class="label" x="1260" y="142" text-anchor="middle">LLM / Models</text>
+<path class="management" d="M715 218V308"/><text class="tiny" x="745" y="272">利用・コスト情報</text><rect class="plane" x="280" y="308" width="870" height="160" rx="16"/><text class="label" x="715" y="365" text-anchor="middle">Konnect Cost Management</text><text class="detail" x="715" y="420" text-anchor="middle">計測　→　帰属　→　予算　→　制御・最適化の判断</text></svg><p class="scene-caption">モデルの選択が変わっても、業務の軸でコストを追う。</p><p class="source"><a href="https://konghq.com/blog/product-releases/ai-cost-management" target="_blank" rel="noopener">Source: AI Cost Management with Kong · 概念構成</a></p>
+</section>
+<section class="slide divider" id="context" data-title="02 · Context"><p class="eyebrow">02</p><h2 class="gradient">Context</h2><p class="subline">エージェントが必要な情報に、届くために。</p></section>
+<section class="slide standard" id="context-mcp" data-title="MCPの動作とContext Sprawl / Bloat" data-component="p1"><div class="context-stage"><div id="p1-host"></div></div></section>
+<section class="slide standard" id="context-value" data-title="Context Meshの価値 · DEMO 2" data-demo="Context Mesh">
+<p class="eyebrow">CONTEXT MESH</p><h2>必要なコンテキストを、使える形で。</h2><div class="columns"><article><p class="number">01 / CONNECT</p><h3>散在する接続を<br>まとめる</h3><p>複数のAPIやMCP Serverを、<br>エージェントが使う<br>共通の入口に。</p></article><article><p class="number">02 / COMPOSE</p><h3>処理を<br>コードにまとめる</h3><p>複数APIの呼出しと加工を、<br>Code Mode MCPで<br>一連の処理に。</p></article><article><p class="number">03 / RETURN</p><h3>必要な結果を<br>返す</h3><p>中間データの往復を抑え、<br>エージェントに渡す<br>コンテキストを整える。</p></article></div><div class="demo-callout"><span>DEMO 02</span>Chat UIから複数APIの結果を集約・加工</div><p class="source"><a href="https://developer.konghq.com/context-mesh/" target="_blank" rel="noopener">Source: Kong Context Mesh Docs</a></p>
+</section>
+<section class="slide standard" id="context-code" data-title="Search ToolとCode Modeの動き" data-component="code">
+<p class="eyebrow">AFTER THE DEMO / CONTEXT MESH</p><h2>探す。コードで処理する。結果を渡す。</h2><div class="step-list"><span>1　探索</span><span>2　コード生成</span><span>3　API呼出し</span><span>4　集約・加工</span><span>5　結果返却</span></div>
+<svg class="diagram" style="height:430px;margin-top:18px" viewBox="0 0 1448 430" aria-label="ツール探索からコードによるAPI実行、結果返却までの概念図">
+<g data-part="agent"><rect class="box" x="15" y="70" width="260" height="280" rx="14"/><text class="label" x="145" y="130" text-anchor="middle">Agent / LLM</text><text class="detail" x="145" y="185" text-anchor="middle">目的を解釈</text><text class="detail" x="145" y="225" text-anchor="middle">必要な処理を組み立て</text><text class="tiny" x="145" y="308" text-anchor="middle">判断・コード生成</text></g>
+<path class="route" d="M275 160H400V88H500M275 235H500M500 290H275"/>
+<g data-part="search"><rect class="box" x="500" y="40" width="450" height="95" rx="12"/><text class="label" x="725" y="98" text-anchor="middle">Search Tool / ツール探索</text></g>
+<g data-part="runtime"><rect class="box" x="500" y="165" width="450" height="225" rx="14"/><text class="label" x="725" y="215" text-anchor="middle">Code Mode MCP</text><g data-reveal="2"><text class="detail" x="540" y="267">API呼出し</text><text class="detail" x="540" y="311">結果を集約・加工</text><text class="detail" x="540" y="355">必要な結果を返却</text></g></g>
+<g data-reveal="2"><path class="route" d="M950 238H1075V98H1165M1075 238H1165M1075 238V348H1165"/><g data-part="apis"><rect class="box" x="1165" y="56" width="260" height="85" rx="12"/><text class="label" x="1295" y="110" text-anchor="middle">API A</text><rect class="box" x="1165" y="195" width="260" height="85" rx="12"/><text class="label" x="1295" y="249" text-anchor="middle">API B</text><rect class="box" x="1165" y="306" width="260" height="85" rx="12"/><text class="label" x="1295" y="360" text-anchor="middle">API C</text></g></g>
+<circle id="code-packet" class="payload" r="8" cx="275" cy="160" opacity="0"/>
+</svg><p class="scene-caption"></p><p class="source"><a href="https://developer.konghq.com/context-mesh/" target="_blank" rel="noopener">Code Modeの概念図 · API A/B/Cは説明用の例。</a></p>
+</section>
+<section class="slide standard" id="context-architecture" data-title="管理する場所と実行する場所" data-component="architecture">
+<p class="eyebrow">CONTEXT MESH / ARCHITECTURE</p><h2>管理する場所と、実行する場所を分ける。</h2><svg class="diagram" viewBox="0 0 1448 500" aria-label="Konnect管理面とGatewayおよびCode Mode MCP実行面の役割">
+<g data-part="control"><rect class="plane" x="360" y="0" width="830" height="105" rx="12"/><text class="label" x="775" y="46" text-anchor="middle">Konnect / 管理面</text><text class="detail" x="775" y="82" text-anchor="middle">ソース・構成・デプロイを管理</text></g>
+<g data-reveal="1"><path class="management" d="M510 105V210M1010 105V210"/><text class="tiny" x="635" y="159">設定・デプロイの管理経路</text><rect x="330" y="190" width="900" height="285" rx="18" fill="#061008" stroke="#345236"/><text class="tiny" x="355" y="449">実行環境（Kubernetes） · Kong Operatorで連携</text></g>
+<g data-part="gateway" data-reveal="1"><rect class="box" x="380" y="235" width="260" height="155" rx="12"/><text class="label" x="510" y="297" text-anchor="middle">Kong Gateway</text><text class="detail" x="510" y="344" text-anchor="middle">Data Plane</text></g>
+<g data-part="server" data-reveal="1"><rect class="box" x="835" y="235" width="345" height="155" rx="12"/><text class="label" x="1007" y="295" text-anchor="middle">Code Mode MCP</text><text class="detail" x="1007" y="342" text-anchor="middle">コードの実行・結果加工</text></g>
+<g data-reveal="2"><path class="flow" d="M250 310H380M640 310H835M1180 310H1290"/><rect class="box" x="0" y="235" width="250" height="155" rx="12"/><text class="label" x="125" y="321" text-anchor="middle">AI Agent</text><rect class="box" x="1290" y="235" width="155" height="155" rx="12"/><text class="detail" x="1367" y="291" text-anchor="middle">APIs</text><text class="detail" x="1367" y="332" text-anchor="middle">既存MCP</text></g></svg><p class="scene-caption"></p><p class="source"><a href="https://developer.konghq.com/context-mesh/get-started/" target="_blank" rel="noopener">Source: Context Mesh / Kong Operator Docs · 論理構成を簡略化</a></p>
+</section>
+<section class="slide standard" id="context-takeaway" data-title="コンテキストを設計する">
+<p class="eyebrow">CONTEXT / TAKEAWAY</p><h2>コンテキストは、量より設計。</h2><p class="big-statement">何にアクセスできるか。<br>どこで処理するか。<br><span class="accent">何をエージェントへ返すか。</span></p>
+</section>
+<section class="slide divider" id="future" data-title="03 · AI Connectivityのこれから"><p class="eyebrow">03</p><h2 class="gradient">AI Connectivityのこれから</h2><p class="subline">個々の接続から、組織の基盤へ。</p></section>
+<section class="slide standard" id="whole" data-title="AIエコシステムを面で支える">
+<p class="eyebrow">THE AI CONNECTIVITY COMPANY</p><h2>AIエコシステムを、面で支える。</h2><div class="columns"><article><p class="number">AGENT ↔ LLM</p><h3>推論・生成への接続</h3><p>モデルを利用する際の<br>ガードレールと<br>コスト管理。</p></article><article><p class="number">AGENT ↔ AGENT</p><h3>協調するための接続</h3><p>複数のエージェントが<br>連携する世界も、<br>全体像に含める。</p></article><article><p class="number">AGENT ↔ API</p><h3>コンテキストへの接続</h3><p>必要な情報を探し、<br>処理し、使える形で<br>エージェントへ届ける。</p></article></div><p class="takeaway">接続先が増えても、制御と運用を個々の実装に閉じ込めない。</p>
+</section>
+<section class="slide standard" id="closing" data-title="点の導入から、面でのスケールへ">
+<p class="eyebrow">AI AGENTS × CONNECTIVITY</p><h2>点の導入から、面でのスケールへ。</h2><p class="big-statement">いまのAIエージェントに、<br><span class="accent">足りない接続は何ですか。</span></p><p class="subline" style="margin-top:64px!important">モデル。エージェント。APIとコンテキスト。<br>その全体を、AI Connectivityとして考える。</p>
+</section>
+<section class="slide ending" id="thanks" data-title="Thank You"><div class="thanks-panel"><h2 class="gradient">Thank You</h2></div></section>
+</div></main>
+<div id="progress"></div>
+<nav id="toolbar" aria-label="スライド操作"><button id="menu-button" aria-label="スライド一覧">一覧</button><span id="position"></span><select id="step-select" aria-label="ページ内の停止状態" hidden></select><button id="previous" aria-label="前の状態またはページ">↑ 前へ</button><button id="next" class="primary" aria-label="次の状態またはページ">次へ ↓</button><button id="replay" hidden>再演</button><button id="pause-button" class="optional">デモ／中断</button><span id="status" role="status"></span><button id="fullscreen" class="optional">全画面</button><button id="help-button" aria-label="操作方法">?</button></nav>
+<dialog id="menu"><button class="close" data-close>閉じる</button><h2>スライド一覧</h2><div id="slide-menu"></div></dialog>
+<dialog id="help"><button class="close" data-close>閉じる</button><h2>操作方法</h2><p><kbd>↓</kbd> <kbd>Space</kbd> <kbd>PageDown</kbd> 次の状態／ページ<br><kbd>↑</kbd> <kbd>PageUp</kbd> 前の状態／ページ<br><kbd>R</kbd> 現在の動きを再演<br><kbd>M</kbd> 一覧　<kbd>F</kbd> 全画面　<kbd>B</kbd> デモ／中断</p><p>ページ内アニメーションは各段階で停止します。最終状態から次へ進むと次ページへ移ります。前へ・一覧への移動は再生中でも動作を中止できます。</p><p>デモ中断や別画面への切替では現在の段階を保持します。戻った後に「再演」も可能です。ホイールは1操作ごと、タッチは上下スワイプで移動します。</p></dialog>
+<div id="pause-screen" hidden><h2>デモ／中断</h2><p>現在のページと停止状態を保持しています。</p><button id="resume">スライドに戻る</button></div><div id="live" aria-live="polite"></div>
+<script type="module" src="./deck.js"></script></body></html>
