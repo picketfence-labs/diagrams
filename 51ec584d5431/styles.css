@@ -37,3 +37,49 @@
 .motion-slide .diagram .flow{animation:route-pulse 1.2s linear}
 @media(prefers-reduced-motion:reduce){.motion-slide .diagram g,.motion-slide .diagram .flow{animation:none}}
 #connectivity{padding:0;background:#000}
+
+/* Context Mesh review pages: same compact card and line vocabulary as p9. */
+#context-code .step-list,#context-architecture .step-list{gap:10px;margin-top:19px}
+#context-code .step-list span,#context-architecture .step-list span{font-size:18px;padding:8px 3px}
+#context-code .diagram,#context-architecture .diagram{height:420px;margin-top:16px}
+#context-code .scene-caption,#context-architecture .scene-caption{font-size:24px!important;line-height:1.4!important;margin-top:8px!important;min-height:36px}
+.code-diagram .code-node,.architecture-diagram .arch-node,.architecture-diagram .arch-pod{fill:#111713;stroke:#4a4d49;stroke-width:2}
+.code-diagram .code-boundary{fill:#07150a;fill-opacity:.33;stroke:#ccff00;stroke-width:2}
+.code-diagram .code-boundary-label,.architecture-diagram .arch-cluster-label{font-size:16px;font-weight:800;letter-spacing:2px;fill:#ccff00}
+.code-diagram .code-heading,.architecture-diagram .arch-heading{font-size:22px;font-weight:700;fill:#fff}
+.code-diagram .code-muted,.architecture-diagram .arch-muted{font-size:16px;fill:#cdd4cb}
+.code-diagram .code-line{fill:none;stroke:#788578;stroke-width:2;stroke-dasharray:7 7}
+.code-diagram .code-agent-line{stroke:#ccff00;stroke-width:3}
+.code-diagram .code-tool-chips rect,.code-diagram .code-raw rect{fill:#171d18;stroke:#4a4d49;stroke-width:1}
+.code-diagram .code-tool-chips text,.code-diagram .code-raw text{font-size:13px;fill:#cdd4cb}
+.code-diagram .code-processed rect,.code-diagram .code-agent-answer rect{fill:#172311;stroke:#ccff00;stroke-width:1.5}
+.code-diagram .code-processed text,.code-diagram .code-agent-answer text{font-size:14px;fill:#ccff00;font-weight:700}
+.code-diagram .code-agent-answer,.code-diagram .code-tool-chips,.code-diagram .code-raw,.code-diagram .code-processed{opacity:0}
+.code-diagram .code-tool-chips rect,.code-diagram .code-tool-chips text{transition:opacity .2s}
+.code-diagram .code-motion{transition:none!important;transform-origin:0 0!important}
+.code-diagram .code-motion rect{fill:#ccff00;stroke:#001408;stroke-width:1}
+.code-diagram .code-motion text{font-size:10px;font-weight:800;fill:#001408}
+#context-code .code-diagram [data-part].active .code-node,#context-code .code-diagram .code-api.active .code-node{stroke:#ccff00;stroke-width:3}
+.architecture-diagram .arch-cluster{fill:#07150a;fill-opacity:.35;stroke:#657365;stroke-width:2;stroke-dasharray:9 7}
+.architecture-diagram .arch-pod{stroke:#ccff00}
+.architecture-diagram .arch-sandbox{fill:#182219;stroke:#697669;stroke-width:1}
+.architecture-diagram .arch-mini{font-size:14px;fill:#cdd4cb}
+.architecture-diagram .arch-management,.architecture-diagram .arch-config{fill:none;stroke:#a8b6a8;stroke-width:2;stroke-dasharray:8 7}
+.architecture-diagram .arch-config{stroke:#ccff00}
+.architecture-diagram .arch-traffic{fill:none;stroke:#ccff00;stroke-width:2.5;stroke-dasharray:8 7}
+.architecture-diagram .arch-route-label{font-size:14px;fill:#9eac9e}
+.architecture-diagram [data-part].highlight .arch-node,.architecture-diagram [data-part].highlight .arch-pod{stroke:#ccff00;stroke-width:3}
+.architecture-diagram [data-part].highlight .arch-heading{fill:#ccff00}
+@media(prefers-reduced-motion:reduce){.code-diagram .code-tool-chips rect,.code-diagram .code-tool-chips text{transition:none}}
+
+.code-diagram .code-snippet{opacity:0}.code-diagram .code-snippet rect{fill:#091d0c;stroke:#ccff00}.code-diagram .code-snippet text{font-family:'Roboto Mono',monospace;font-size:13px;fill:#ccff00}
+
+.motion-slide .code-diagram g{transition:none}
+
+.code-diagram .code-active-route,.code-diagram .code-return-route{fill:none;stroke:#ccff00;stroke-width:4;stroke-linecap:round;stroke-dasharray:16 10}
+.code-diagram .code-active-route.is-flowing,.code-diagram .code-return-route.is-flowing{animation:code-route-move .65s linear infinite}
+@keyframes code-route-move{to{stroke-dashoffset:-52}}
+.code-diagram .code-motion-stack{opacity:0}
+.code-diagram .code-motion[data-kind="DATA"] .code-motion-stack{opacity:1}
+.code-diagram .code-motion-stack rect{fill:#ccff00;stroke:#001408;stroke-width:1}
+@media(prefers-reduced-motion:reduce){.code-diagram .code-active-route.is-flowing,.code-diagram .code-return-route.is-flowing{animation:none}}
