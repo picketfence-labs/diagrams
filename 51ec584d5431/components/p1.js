@@ -102,7 +102,6 @@ export function mountP1(host, onChange = () => {}) {
         ${[0,1,2,3,4,5].map(n=>`<g data-extra-server="${n}" transform="translate(${760+n%3*202} ${175+Math.floor(n/3)*85})"><rect width="160" height="64" rx="6" class="server-box"/><text x="80" y="27" text-anchor="middle" class="extra-label">MCP Server ${n+4}</text><text x="80" y="49" text-anchor="middle" class="small">Tool / Tool / …</text></g>`).join('')}</g>
       <g data-el="bloat-effects" transform="translate(950 515)"><text y="22" class="data-label">トークン消費</text>${[0,1,2,3,4,5].map(n=>`<rect data-cost="${n}" x="${n*38}" y="35" width="30" height="15" rx="2" class="meter-cell"/>`).join('')}<text y="85" class="data-label">処理待ち</text>${[0,1,2,3,4,5].map(n=>`<rect data-wait="${n}" x="${n*38}" y="98" width="30" height="15" rx="2" class="meter-cell"/>`).join('')}</g>
       <g class="packet" visibility="hidden"><circle r="8"/><g class="data-packet"><rect x="-25" y="-19" width="44" height="27" rx="3"/><rect x="-22" y="-15" width="44" height="27" rx="3"/><rect x="-19" y="-11" width="44" height="27" rx="3"/><text x="3" y="7" text-anchor="middle">DATA</text></g></g>
-      <g class="packet-status packet" visibility="hidden" transform="translate(36 660)"><rect width="620" height="42" rx="4"/><text x="18" y="27"></text></g>
       `;
     // Retain the Tool chips from Sprawl above the expanding context background.
     svg.querySelector('[data-el="bloat"]').after(svg.querySelector('[data-el="tool-cloud"]'));
@@ -153,43 +152,42 @@ export function mountP1(host, onChange = () => {}) {
     el('[data-path="handoff"]',root).style.opacity=0;
     el('[data-el="tools"] text',root).textContent=processing?'取得済み: 顧客 / 実績 / 契約':'Tool名 / 引数 / 返却情報';
     el('.scene-title',root).textContent=titles[i];el('title',root).textContent=titles[i];el('.sentence',root).textContent=descriptions[i];el('.scene-summary',root).textContent=captions[i];
-    el('.packet-status',root).setAttribute('transform',processing?'translate(620 563)':c===12?'translate(790 135)':'translate(36 660)');el('.packet-status rect',root).setAttribute('width',c===12?560:620);
     candidate(c===11.1&&s.selectionComplete?[2,7,10]:[],root);routes(s,root);
   }
   function interpolate(a,b,t){const s={};for(const k of Object.keys(b))s[k]=Array.isArray(b[k])?b[k].map((v,n)=>a[k][n]+(v-a[k][n])*t):a[k]+(b[k]-a[k])*t;return s;}
   const animate=(ms,token,draw)=>new Promise(resolve=>{
     const start=performance.now();function frame(now){if(token!==generation){resolve(false);return;}const t=Math.min(1,(now-start)/ms);if(draw)draw(t);if(t<1)requestAnimationFrame(frame);else resolve(true);}requestAnimationFrame(frame);
   });
-  const hop=(name,reverse,label)=>({name,reverse,label});
-  const request=n=>[hop('llm',false,'LLMから実行を依頼'),hop('handoff',false,'Agent内のMCP Clientへ'),hop(`mcp${n}`,false,'ClientからMCP Serverへ'),hop(`server-handoff${n}`,false,'MCP ServerがAPIを呼出し'),hop(`api${n}`,false,'APIを実行')];
-  const response=n=>[hop(`api${n}`,true,'APIの結果を返却'),hop(`server-handoff${n}`,true,'MCP Serverが結果を返却'),hop(`mcp${n}`,true,'MCP Clientへ返却'),hop('handoff',true,'Agentが結果を受信'),hop('llm',true,'LLMの入力に追加')];
+  const hop=(name,reverse)=>({name,reverse});
+  const request=n=>[hop('llm',false),hop('handoff',false),hop(`mcp${n}`,false),hop(`server-handoff${n}`,false),hop(`api${n}`,false)];
+  const response=n=>[hop(`api${n}`,true),hop(`server-handoff${n}`,true),hop(`mcp${n}`,true),hop('handoff',true),hop('llm',true)];
   async function travel(hops,token,speedMultiplier=1){
     if(token!==generation)return false;
     const segments=hops.map(h=>({...h,element:el(`[data-path="${h.name}"]`)}));
     let total=0;for(const h of segments){h.start=total;h.length=h.element.getTotalLength();total+=h.length;}
-    const dot=el('.packet'),legend=el('.packet-status');dot.setAttribute('visibility','visible');legend.setAttribute('visibility','visible');let active;
+    const dot=el('.packet');dot.setAttribute('visibility','visible');let active;
     const ok=await animate(total/SPEED*1000/speedMultiplier,token,t=>{
       const distance=t*total,h=segments.find(h=>distance<h.start+h.length)||segments.at(-1);
-      if(active!==h){if(active)active.element.classList.remove('active');h.element.classList.add('active');active=h;el('text',legend).textContent=h.label;}
+      if(active!==h){if(active)active.element.classList.remove('active');h.element.classList.add('active');active=h;}
       const local=Math.max(0,Math.min(h.length,distance-h.start)),point=h.element.getPointAtLength(h.reverse?h.length-local:local);
       dot.setAttribute('transform',`translate(${point.x} ${point.y})`);
       app.dataset.route=h.name;app.dataset.direction=h.reverse?'reverse':'forward';
     });
-    if(token===generation){dot.setAttribute('visibility','hidden');legend.setAttribute('visibility','hidden');if(active)active.element.classList.remove('active');}
+    if(token===generation){dot.setAttribute('visibility','hidden');if(active)active.element.classList.remove('active');}
     return ok;
   }
   const showData=n=>svg.querySelectorAll('[data-row]').forEach((e,k)=>e.style.opacity=k<n?1:0);
   async function flow(i,token){
     const c=codes[i];
-    if(c===1)await travel([hop('llm',true,'処理ルール・入力データ'),hop('llm',false,'LLMの処理結果')],token);
+    if(c===1)await travel([hop('llm',true),hop('llm',false)],token);
     if(c===4){
       const base={...state(i),tools:0,listed:0};render(base);
-      if(!await travel([hop('llm',false,'利用可能なToolを確認'),hop('handoff',false,'Agent内のClientが一覧を取得')],token))return;
+      if(!await travel([hop('llm',false),hop('handoff',false)],token))return;
       for(let n=0;n<3;n++){
-        if(!await travel([hop(`mcp${n}`,false,`Server ${n+1}へ tools/list`),hop(`mcp${n}`,true,`Server ${n+1}のTool定義`)],token))return;
+        if(!await travel([hop(`mcp${n}`,false),hop(`mcp${n}`,true)],token))return;
         base.listed=n+1;render(base);
       }
-      if(!await travel([hop('handoff',true,'各ServerのTool定義をまとめる'),hop('llm',true,'Tool定義をLLMへ渡す')],token))return;
+      if(!await travel([hop('handoff',true),hop('llm',true)],token))return;
       await animate(250,token,t=>render({...base,tools:t}));
     }
     if(c===6)await travel(request(0),token);
@@ -200,7 +198,7 @@ export function mountP1(host, onChange = () => {}) {
     }
     if(c===10.2){
       el('[data-el="agent-result"]').style.opacity=0;
-      if(await travel([hop('llm',false,'集計・加工した結果をAgentへ返却')],token))el('[data-el="agent-result"]').style.opacity=1;
+      if(await travel([hop('llm',false)],token))el('[data-el="agent-result"]').style.opacity=1;
     }
     if(c===11){
       const base={...state(i),cloud:0,extra:0,tools:1,data:3};
@@ -217,15 +215,15 @@ export function mountP1(host, onChange = () => {}) {
     if(c===12){
       const base={...state(i),reshape:.5,bloat:0,load:0,work:0,impacts:0};
       const paint=s=>{render({...base,...s});};
-      if(!await animate(300,token,t=>paint({bloat:t},'Tool定義を保持したまま、APIの取得データが加わります。')))return;
+      if(!await animate(300,token,t=>paint({bloat:t})))return;
       let load=0;
       for(let n=0;n<3;n++){
-        if(!await travel([hop('llm',true,`${['顧客','利用実績','契約'][n]}の取得データをLLMへ追加`)],token,1/3))return;
+        if(!await travel([hop('llm',true)],token,1/3))return;
         const next=(n+1)/3;
-        if(!await animate(1500,token,t=>paint({bloat:1,load:load+(next-load)*t,reshape:.5+(load+(next-load)*t)*.5,impacts:n+1},n===2?'必要なデータだけでなく、機微情報を含む場合もあります。':'取得データが積み上がり、LLMが扱う情報量が増えます。')))return;
+        if(!await animate(1500,token,t=>paint({bloat:1,load:load+(next-load)*t,reshape:.5+(load+(next-load)*t)*.5,impacts:n+1})))return;
         load=next;
       }
-      if(!await animate(3000,token,t=>paint({bloat:1,load:1,reshape:1,work:t,impacts:t>.8?4:3},'大量のデータを読み、突き合わせる作業までLLMが担います。')))return;
+      if(!await animate(3000,token,t=>paint({bloat:1,load:1,reshape:1,work:t,impacts:t>.8?4:3})))return;
     }
   }
   function clean(){svg.querySelectorAll('.packet').forEach(e=>e.setAttribute('visibility','hidden'));svg.querySelectorAll('.active,.op-active').forEach(e=>e.classList.remove('active','op-active'));svg.querySelectorAll('[data-tool]').forEach(e=>e.style.opacity=1);delete app.dataset.route;delete app.dataset.direction;}

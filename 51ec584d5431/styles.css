@@ -86,3 +86,36 @@
 .code-diagram .code-motion[data-kind="DATA"] .code-motion-stack{opacity:1}
 .code-diagram .code-motion-stack rect{fill:#ccff00;stroke:#001408;stroke-width:1}
 @media(prefers-reduced-motion:reduce){.code-diagram .code-active-route.is-flowing,.code-diagram .code-return-route.is-flowing{animation:none}}
+
+.connectivity-value-slide{background:#000}
+.connectivity-value-slide h2{font-size:53px}
+.connectivity-value-slide .value-intro{font-size:25px;color:var(--muted);margin-top:15px}
+.connectivity-value-slide .step-list{margin-top:21px;gap:28px}
+.connectivity-value-slide .step-list span{font-size:19px;padding:7px 3px}
+.connectivity-value-diagram{height:430px;margin-top:13px}
+.connectivity-value-slide .scene-caption{font-size:25px!important;line-height:1.4!important;margin-top:9px!important}
+.connectivity-value-diagram text{font-family:inherit;fill:#fff}
+.connectivity-value-diagram .value-outline{fill:#0a0d0b;stroke:#4a4d49;stroke-width:2}
+.connectivity-value-diagram .value-heading{font-size:26px;font-weight:700}
+.connectivity-value-diagram .value-point-row rect{fill:#171d18;stroke:#596559;stroke-width:1.5}
+.connectivity-value-diagram .value-point-row text{font-size:20px;font-weight:700}
+.connectivity-value-diagram .value-point-row .value-small{font-size:15px;fill:#aebbad}
+.connectivity-value-diagram .value-warning{font-size:19px;fill:#cdd4cb}
+.connectivity-value-diagram .value-transition{fill:none;stroke:#ccff00;stroke-width:3;stroke-dasharray:8 7}
+.connectivity-value-diagram .value-arrowhead{fill:#ccff00}
+.connectivity-value-diagram .value-konnect-box{fill:#152115;stroke:#ccff00;stroke-width:2}
+.connectivity-value-diagram .value-konnect-name{font-size:31px;font-weight:800;fill:#ccff00}
+.connectivity-value-diagram .value-konnect-detail{font-size:22px;font-weight:700}
+.connectivity-value-diagram .value-management{fill:none;stroke:#ccff00;stroke-width:2;stroke-dasharray:6 6}
+.connectivity-value-diagram .value-plane-box{fill:#07150a;stroke:#ccff00;stroke-width:2}
+.connectivity-value-diagram .value-plane-label{font-size:20px;letter-spacing:2px;font-weight:800;fill:#ccff00}
+.connectivity-value-diagram .value-lane>rect:first-child{fill:#111713;stroke:#475047;stroke-width:1.5}
+.connectivity-value-diagram .value-node{fill:#1a1f1b;stroke:#a8b6a8;stroke-width:1.5}
+.connectivity-value-diagram .value-lane text{font-size:20px;font-weight:700}
+.connectivity-value-diagram .value-route{fill:none;stroke:#ccff00;stroke-width:3;stroke-dasharray:9 7}
+.connectivity-value-diagram .value-controls{fill:#1a2417;stroke:#65785c;stroke-width:1}
+.connectivity-value-diagram .value-controls-label{font-size:16px;font-weight:700;fill:#ccff00}
+.connectivity-value-diagram .sequence-packet{fill:#ccff00}
+.connectivity-value-diagram .value-points{transition:opacity .5s}
+.connectivity-value-diagram .value-plane.highlight .value-plane-box,.connectivity-value-diagram .value-konnect.highlight .value-konnect-box{stroke-width:3}
+#connectivity-value[data-step="1"] .value-points,#connectivity-value[data-step="2"] .value-points{opacity:.35}

@@ -54,7 +54,7 @@
 :host #c-peer{left:545px;top:595px;width:300px;height:80px;padding:13px 26px}
 :host #c-peer>span{margin-top:2px}
 :host #c-flow-note{position:absolute;left:373px;top:334px;width:150px;text-align:center;white-space:nowrap;color:#cdd4cb;font-size:16px;font-weight:700}
-:host #c-flow-note span{display:block}:host #c-flow-note span+span{margin-top:35px}
+:host #c-flow-note span{display:block}:host #c-flow-note span+span{margin-top:82px}
 :host .c-hidden{opacity:0;pointer-events:none}:host .c-hidden.c-visible{opacity:1}
 :host .c-node.is-pulsing{border-color:#ccff00;border-width:4px}</style>
 <div class="c-canvas" role="img" aria-label="一つのAIエージェントからLLM、API、MCP、他のエージェントへ接続が広がる">
@@ -78,6 +78,28 @@
 <div id="c-flow-note" class="c-hidden"><span>指示・ルール</span><span>処理結果</span></div>
 </div>
 </template>
+</section>
+<section class="slide standard connectivity-value-slide" id="connectivity-value" data-title="AI Connectivityを面で捉える" data-component="connectivityValue">
+<p class="eyebrow">AI CONNECTIVITY / WHY KONG</p>
+<h2>AIをスケールさせるには、接続を<span class="accent">面で捉える。</span></h2>
+<p class="value-intro">Agent、LLM、MCPを個別に増やすだけでは、制御も運用も分散する。</p>
+<div class="step-list"><span>1 点ごとの対応</span><span>2 全経路を面で捉える</span><span>3 Kong + Konnect</span></div>
+<svg class="diagram connectivity-value-diagram" viewBox="0 0 1448 430" role="img" aria-label="左は接続ごとに分かれた個別の制御。右はKong AI Connectivityの基盤がAgentとLLM、Agent同士、AgentとMCPとAPIの接続を面として捉え、その上でKonnectが企業全体の管理と運用を提供する">
+<g class="value-points" data-part="points"><rect class="value-outline" x="20" y="90" width="445" height="330" rx="8"/><text class="value-heading" x="45" y="126">点ごとの対応</text>
+<g class="value-point-row"><rect x="44" y="154" width="398" height="61" rx="6"/><text x="66" y="190">Agent → LLM</text><text class="value-small" x="304" y="190">個別の制御</text></g>
+<g class="value-point-row"><rect x="44" y="235" width="398" height="61" rx="6"/><text x="66" y="271">Agent → MCP → API</text><text class="value-small" x="304" y="271">個別の制御</text></g>
+<g class="value-point-row"><rect x="44" y="316" width="398" height="61" rx="6"/><text x="66" y="352">Agent ↔ Agent</text><text class="value-small" x="304" y="352">個別の制御</text></g>
+<text class="value-warning" x="45" y="402">増えるほど、運用が部分最適に</text></g>
+<path class="value-transition" d="M485 252H550"/><path class="value-arrowhead" d="M550 252l-13 -9v18z"/>
+<g class="value-konnect" data-part="konnect" data-reveal="2"><rect class="value-konnect-box" x="575" y="2" width="830" height="66" rx="7"/><text class="value-konnect-name" x="600" y="43">Konnect</text><text class="value-konnect-detail" x="824" y="42">企業全体の管理・運用</text><path class="value-management" d="M990 68V90"/></g>
+<g class="value-plane" data-part="plane" data-reveal="1"><rect class="value-plane-box" x="575" y="90" width="830" height="330" rx="8"/><text class="value-plane-label" x="600" y="125">KONG AI CONNECTIVITY</text>
+<g class="value-lane"><rect x="600" y="145" width="780" height="68" rx="5"/><rect class="value-node" x="620" y="157" width="145" height="44" rx="5"/><text x="649" y="185">Agent</text><path class="value-route" d="M765 179H1180"/><rect class="value-node" x="1180" y="157" width="175" height="44" rx="5"/><text x="1237" y="185">LLM</text></g>
+<g class="value-lane"><rect x="600" y="222" width="780" height="68" rx="5"/><rect class="value-node" x="620" y="234" width="145" height="44" rx="5"/><text x="649" y="262">Agent</text><path class="value-route" d="M765 256H1180"/><rect class="value-node" x="1180" y="234" width="175" height="44" rx="5"/><text x="1205" y="262">別のAgent</text></g>
+<g class="value-lane"><rect x="600" y="299" width="780" height="68" rx="5"/><rect class="value-node" x="620" y="311" width="145" height="44" rx="5"/><text x="649" y="339">Agent</text><path class="value-route" d="M765 333H970M1100 333H1210"/><rect class="value-node" x="970" y="311" width="130" height="44" rx="5"/><text x="1007" y="339">MCP</text><rect class="value-node" x="1210" y="311" width="145" height="44" rx="5"/><text x="1265" y="339">API</text></g>
+<rect class="value-controls" x="600" y="382" width="780" height="27" rx="4"/><text class="value-controls-label" x="624" y="402">アクセス制御</text><text class="value-controls-label" x="915" y="402">観測</text><text class="value-controls-label" x="1135" y="402">コスト管理</text></g>
+</svg>
+<p class="scene-caption"></p>
+<p class="source"><a href="https://konghq.com/products/kong-konnect" target="_blank" rel="noopener">Kong Konnect</a> · <a href="https://developer.konghq.com/ai-gateway/architecture/" target="_blank" rel="noopener">AI Gateway architecture</a></p>
 </section>
 <section class="slide divider" id="llm" data-title="01 · LLM Connectivity"><p class="eyebrow">01</p><h2 class="gradient">LLM Connectivity</h2><p class="subline">安全に使い、コストを理解する。</p></section>
 <section class="slide standard" id="guardrails" data-title="LLMの切替・フェイルオーバー・ガードレール" data-component="gateway">
